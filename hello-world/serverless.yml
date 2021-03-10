@@ -31,7 +31,6 @@ provider:
 package:
   exclude:
     - .vscode/**
-    - .npmignore
 
 functions:
   hello-function:
