@@ -14,7 +14,7 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - main
+      - hello-world
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
