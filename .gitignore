@@ -126,6 +126,10 @@ venv.bak/
 dmypy.json
 
 **/*.joblib
+**/.npmignore
+**/.vscode/
+**/node_modules/
+**/package-lock.json
 
 # Pyre type checker
 .pyre/
