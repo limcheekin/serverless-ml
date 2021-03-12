@@ -25,9 +25,9 @@ jobs:
         node-version: '10.x'
     - name: Install Serverless Framework
       run: npm install -g serverless
-    - name: Go to project directory and list it
-      run: cd scikit-example;ls -l
     - name: Serverless AWS authentication
       run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
+    - name: Install Python Requirements Plugin
+      run: cd scikit-example;sls plugin install -n serverless-python-requirements
     - name: Deploy Lambda functions
-      run: sls deploy
+      run: cd scikit-example;sls deploy
