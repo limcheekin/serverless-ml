@@ -27,7 +27,9 @@ jobs:
       run: npm install -g serverless
     - name: Serverless AWS authentication
       run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
-    - name: Install Python Requirements Plugin
+    - name: Install Python Requirements plugin
       run: cd scikit-example;sls plugin install -n serverless-python-requirements
     - name: Deploy Lambda functions
       run: cd scikit-example;sls deploy
+    - name: Test Lambda functions
+      run: cd scikit-example;sls invoke --function predict-price --path "$(pwd)/event.json"
