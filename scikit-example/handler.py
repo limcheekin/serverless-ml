@@ -1,8 +1,10 @@
 import json
-from sklearn.externals import joblib
+import pickle
 
-model_name = 'model_california_housing.joblib'
-model = joblib.load(model_name)
+# REF: https://www.kaggle.com/prmohanty/python-how-to-save-and-load-ml-models
+model_name = 'model_california_housing.pkl'
+with open(model_name, 'rb') as file:  
+    model = pickle.load(file)
 
 def predict(event, context):
     body = {
