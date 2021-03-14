@@ -29,7 +29,6 @@ functions:
   predict-price:
     handler: handler.predict
     memorySize: 512
-    warmup: true
     events:
       - http:
           path: /get-price
@@ -45,7 +44,7 @@ functions:
                 aveOccup: true
                 latitude: true
                 longitude: true
-                
+
 plugins:
   - serverless-python-requirements
   - serverless-plugin-warmup
@@ -53,5 +52,11 @@ plugins:
 custom:
   pythonRequirements:
     dockerizePip: true
-    slim: true 
+    slim: true
+  warmup: # REF: https://github.com/juanjoDiaz/serverless-plugin-warmup
+    twentyFourHoursWarmer:
+      enabled: true
+      events:
+        - schedule: cron(*/5 * ? * * *)
+      concurrency: 1
 
