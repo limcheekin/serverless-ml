@@ -12,7 +12,9 @@ def predict(event, context):
         "message": "OK",
     }
 
-    if (event.source == 'serverless-plugin-warmup'):
+    print("event['source']", event['source'])
+
+    if (event['source'] == 'serverless-plugin-warmup'):
         body['message'] = 'WarmUP - Keep the Lambda warm!'
 
     else: 
