@@ -29,7 +29,9 @@ jobs:
       run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
     - name: Install Python Requirements plugin
       run: cd scikit-example;sls plugin install -n serverless-python-requirements
+    - name: Install Warmup plugin
+      run: pwd;cd scikit-example;sls plugin install -n serverless-plugin-warmup
     - name: Deploy Lambda functions
-      run: cd scikit-example;sls deploy
+      run: pwd;cd scikit-example;sls deploy
     - name: Test Lambda functions
-      run: cd scikit-example;sls invoke --function predict-price --path "$(pwd)/event.json"
+      run: pwd;cd scikit-example;sls invoke --function predict-price --path "$(pwd)/event.json"

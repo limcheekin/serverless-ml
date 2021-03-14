@@ -7,11 +7,15 @@ with open(model_name, 'rb') as file:
     model = pickle.load(file)
 
 def predict(event, context):
+
     body = {
         "message": "OK",
     }
 
-    if 'queryStringParameters' in event.keys():
+    if (event.source == 'serverless-plugin-warmup'):
+        body['message'] = 'WarmUP - Keep the Lambda warm!'
+
+    else: 
         params = event['queryStringParameters']
 
         medInc = float(params['medInc']) / 100000
@@ -28,9 +32,6 @@ def predict(event, context):
         predictedPrice = model.predict(data)[0] * 100000 # convert to units of 1 USDs
         predictedPrice = round(predictedPrice, 2)
         body['predictedPrice'] = predictedPrice
-    
-    else:
-        body['message'] = 'queryStringParameters not in event.'
 
     print(body['message'])
 
