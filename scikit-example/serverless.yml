@@ -8,6 +8,13 @@ provider:
   lambdaHashingVersion: 20201221
   stage: dev
   region: us-east-1
+  iam:
+    role:
+      statements:
+      - Effect: 'Allow'
+        Action:
+          - 'lambda:InvokeFunction'
+        Resource: "*"
 
 package:
   exclude:
@@ -38,13 +45,7 @@ functions:
                 aveOccup: true
                 latitude: true
                 longitude: true
-
-iamRoleStatements:
-  - Effect: 'Allow'
-    Action:
-      - 'lambda:InvokeFunction'
-    Resource: "*"
-
+                
 plugins:
   - serverless-python-requirements
   - serverless-plugin-warmup
