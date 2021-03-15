@@ -1,1 +1,10 @@
-{"name":"california-housing","description":"","version":"0.1.0","devDependencies":{"serverless-api-gateway-throttling":"^1.1.0","serverless-plugin-warmup":"^5.2.1","serverless-python-requirements":"^5.1.0"}}
+{
+    "name": "ner-api",
+    "description": "",
+    "version": "0.1.0",
+    "devDependencies": {
+        "serverless-api-gateway-throttling": "^1.1.0",
+        "serverless-plugin-warmup": "^5.2.1",
+        "serverless-python-requirements": "^5.1.0"
+    }
+}
