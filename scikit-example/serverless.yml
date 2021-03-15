@@ -56,12 +56,14 @@ custom:
   pythonRequirements:
     dockerizePip: true
     slim: true
-  warmup: # REF: https://github.com/juanjoDiaz/serverless-plugin-warmup
+  # https://github.com/juanjoDiaz/serverless-plugin-warmup  
+  warmup:
     twentyFourHoursWarmer:
       enabled: true
       events:
         - schedule: cron(*/5 * ? * * *)
       concurrency: 1
-  apiGatewayThrottling: # REF: https://github.com/DianaIonita/serverless-api-gateway-throttling
-    maxRequestsPerSecond: 5
-    maxConcurrentRequests: 2
+  # https://github.com/DianaIonita/serverless-api-gateway-throttling
+  apiGatewayThrottling:
+    maxRequestsPerSecond: 1
+    maxConcurrentRequests: 1

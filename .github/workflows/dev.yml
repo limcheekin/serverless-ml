@@ -27,12 +27,15 @@ jobs:
       run: npm install -g serverless
     - name: Serverless AWS authentication
       run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
-    - name: Install Python Requirements plugin
-      run: cd scikit-example;sls plugin install -n serverless-python-requirements
-    - name: Install Warmup plugin
-      run: pwd;cd scikit-example;sls plugin install -n serverless-plugin-warmup
-    - name: Install API Gateway Throttling plugin
-      run: pwd;cd scikit-example;sls plugin install -n serverless-api-gateway-throttling
+# The following commands needed for local installation only
+#    - name: Install Python Requirements plugin
+#      run: cd scikit-example;sls plugin install -n serverless-python-requirements
+#    - name: Install Warmup plugin
+#      run: pwd;cd scikit-example;sls plugin install -n serverless-plugin-warmup
+#    - name: Install API Gateway Throttling plugin
+#      run: pwd;cd scikit-example;sls plugin install -n serverless-api-gateway-throttling
+    - name: Install plugins
+      run: cd scikit-example;npm install
     - name: Deploy Lambda functions
       run: pwd;cd scikit-example;sls deploy
     - name: Test Lambda functions
