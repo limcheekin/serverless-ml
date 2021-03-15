@@ -31,6 +31,7 @@ functions:
   recognize-named-entites:
     handler: handler.handle_request
     memorySize: 1536
+    timeout: 30
     events:
       - http:
           path: ner
