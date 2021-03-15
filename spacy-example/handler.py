@@ -26,16 +26,24 @@ def create_ner_spans(text):
 
 
 def handle_request(event, context):
-    text = event['body']
-    print(text)
-    spans = []
-    if text is not None:
-        spans = create_ner_spans(text)
-    print(spans)
-
     body = {
-        'spans': spans
+        "message": "OK",
     }
+    
+    if event.get("source") == "serverless-plugin-warmup":
+        body['message'] = 'WarmUP - Keep the Lambda warm!'
+
+    else:
+        text = event['body']
+        print(text)
+        spans = []
+        if text is not None:
+            spans = create_ner_spans(text)
+        print(spans)
+
+        body = {
+            'spans': spans
+        }
 
     response = {
         "statusCode": 200,
