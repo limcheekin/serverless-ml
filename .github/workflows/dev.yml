@@ -31,5 +31,5 @@ jobs:
       run: cd spacy-example;npm install
     - name: Deploy Lambda functions
       run: pwd;cd spacy-example;sls deploy
-#    - name: Test Lambda functions
-#      run: pwd;cd scikit-example;sls invoke --function predict-price --path "$(pwd)/event.json"
+    - name: Test Lambda functions
+      run: pwd;cd spacy-example;sls invoke --function recognize-named-entites --path "$(pwd)/event.json"
