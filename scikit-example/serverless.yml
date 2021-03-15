@@ -50,7 +50,8 @@ functions:
 plugins:
   - serverless-python-requirements
   - serverless-plugin-warmup
-  
+  - serverless-api-gateway-throttling
+
 custom:
   pythonRequirements:
     dockerizePip: true
@@ -61,4 +62,6 @@ custom:
       events:
         - schedule: cron(*/5 * ? * * *)
       concurrency: 1
-
+  apiGatewayThrottling: # REF: https://github.com/DianaIonita/serverless-api-gateway-throttling
+    maxRequestsPerSecond: 5
+    maxConcurrentRequests: 2

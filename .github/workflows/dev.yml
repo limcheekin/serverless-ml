@@ -31,6 +31,8 @@ jobs:
       run: cd scikit-example;sls plugin install -n serverless-python-requirements
     - name: Install Warmup plugin
       run: pwd;cd scikit-example;sls plugin install -n serverless-plugin-warmup
+    - name: Install API Gateway Throttling plugin
+      run: pwd;cd scikit-example;sls plugin install -n serverless-api-gateway-throttling
     - name: Deploy Lambda functions
       run: pwd;cd scikit-example;sls deploy
     - name: Test Lambda functions
