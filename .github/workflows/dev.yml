@@ -28,8 +28,8 @@ jobs:
     - name: Serverless AWS authentication
       run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
     - name: Install plugins
-      run: cd scikit-example;npm install
+      run: cd spacy-example;npm install
     - name: Deploy Lambda functions
-      run: pwd;cd scikit-example;sls deploy
+      run: pwd;cd spacy-example;sls deploy
 #    - name: Test Lambda functions
 #      run: pwd;cd scikit-example;sls invoke --function predict-price --path "$(pwd)/event.json"
