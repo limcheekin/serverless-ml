@@ -37,7 +37,7 @@ functions:
           method: get
           request:
             parameters:
-              queryStrings:
+              querystrings:
                 medInc: true
                 houseAge: true
                 aveRooms: true
