@@ -7,9 +7,9 @@ except ImportError as error:
 print('unzipped')
 
 import json
-import en_core_web_sm
+import spacy
 
-MODEL = en_core_web_sm.load()
+MODEL = spacy.load("en_core_web_sm")
 print('model loaded')
 
 def create_ner_spans(text):
