@@ -15,7 +15,7 @@ d = []
 for (dirpath, dirnames, filenames) in walk('/var/task/'):
     d.extend(dirnames)
     break
-print(d)
+print("directories", d)
 #import en_core_web_sm
 
 #MODEL = en_core_web_sm.load()
