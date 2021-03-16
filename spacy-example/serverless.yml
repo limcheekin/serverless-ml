@@ -10,9 +10,10 @@ provider:
     shouldStartNameWithService: true
   stage: dev
   region: us-east-1
+  # REF: https://www.serverless.com/framework/docs/providers/aws/guide/layers/
   layers:
-    spacy: arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy:41
-    en_core_web_sm: arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy_model_en_small:1
+  - arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy:41
+  - arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy_model_en_small:1
   iam:
     role:
       statements:
