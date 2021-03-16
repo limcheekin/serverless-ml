@@ -55,3 +55,17 @@ def handle_request(event, context):
     }
 
     return response
+
+def do_main():
+    event = {
+        'source': 'main',
+        'body': 'Jim bought 300 shares of Acme Corp. in 2006.',
+    }
+
+    response = handle_request(event, None)
+    body = json.loads(response['body'])
+    print('body:', body)
+
+    
+
+#do_main()    
