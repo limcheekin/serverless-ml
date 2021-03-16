@@ -1,10 +1,11 @@
 print('container start')
 
-#try:
-#    import unzip_requirements
-#except ImportError as error:
-#    pass
-#print('unzipped')
+try:
+    import unzip_requirements
+except ImportError as error:
+    print(error)
+    
+print('unzipped')
 
 import json
 #import spacy

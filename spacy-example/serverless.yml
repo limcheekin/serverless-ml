@@ -46,10 +46,10 @@ custom:
   pythonRequirements:
     dockerizePip: true
     slim: true
-    #zip: true
-    #noDeploy: []
-    #useDownloadCache: true
-    #useStaticCache: true    
+    zip: true
+    noDeploy: []
+    useDownloadCache: true
+    useStaticCache: true    
   # https://github.com/juanjoDiaz/serverless-plugin-warmup  
   warmup:
     twentyFourHoursWarmer:
