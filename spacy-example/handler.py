@@ -4,15 +4,15 @@ try:
     import unzip_requirements
 except ImportError as error:
     print(error)
-    
+
 print('unzipped')
 
 import json
-#import spacy
-import en_core_web_sm
+import spacy
+#import en_core_web_sm
 
-MODEL = en_core_web_sm.load()
-#MODEL = spacy.load("en_core_web_sm")
+#MODEL = en_core_web_sm.load()
+MODEL = spacy.load('en_core_web_sm')
 print('model loaded')
 
 def create_ner_spans(text):
