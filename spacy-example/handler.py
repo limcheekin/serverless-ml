@@ -9,11 +9,18 @@ print('container start')
 
 import json
 import spacy
+from os import walk
+
+d = []
+for (dirpath, dirnames, filenames) in walk('/var/task/'):
+    d.extend(dirnames)
+    break
+print(d)
 #import en_core_web_sm
 
 #MODEL = en_core_web_sm.load()
 #MODEL = spacy.load('en_core_web_sm')
-MODEL = spacy.load('en_core_web_sm-3.0.0/en_core_web_sm/en_core_web_sm-3.0.0')
+MODEL = spacy.load('/var/task/en_core_web_sm-3.0.0/en_core_web_sm/en_core_web_sm-3.0.0')
 print('model loaded')
 
 def create_ner_spans(text):
