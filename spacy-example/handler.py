@@ -20,7 +20,9 @@ print("directories", d)
 
 #MODEL = en_core_web_sm.load()
 #MODEL = spacy.load('en_core_web_sm')
-MODEL = spacy.load('/var/task/en_core_web_sm/en_core_web_sm-3.0.0')
+#MODEL = spacy.load('/var/task/en_core_web_sm/en_core_web_sm-3.0.0')
+# REF: https://github.com/keithrozario/Klayers/issues/97
+MODEL = spacy.load("/opt/en_core_web_sm-2.2.5/en_core_web_sm/en_core_web_sm-2.2.5")
 print('model loaded')
 
 def create_ner_spans(text):
