@@ -36,4 +36,4 @@ jobs:
     - name: Echo Endpoint URL
       run: echo $ENDPOINT
     - name: Test Lambda functions
-      run: "pwd;cd keras-example;curl --request POST -H 'Content-Type: image/jpeg' --data-binary 'elephant.jpg' $ENDPOINT"
+      run: "pwd;cd keras-example;curl --request POST -H 'Content-Type: image/jpeg' --data-binary 'elephant.jpg' $(sls info --verbose | grep ServiceEndpoint | sed s/ServiceEndpoint: //g | awk '{print $1\"/get-image-name\"}')"
