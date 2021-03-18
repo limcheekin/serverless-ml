@@ -33,5 +33,7 @@ jobs:
       run: pwd;cd keras-example;sls deploy
     - name: Export Endpoint URL
       run: pwd;cd keras-example;export ENDPOINT=$(sls info --verbose | grep ServiceEndpoint | sed s/ServiceEndpoint\:\ //g | awk '{print $1"/get-image-name"}')
+    - name: Echo Endpoint URL
+      run: echo $ENDPOINT
     - name: Test Lambda functions
-      run: "echo $ENDPOINT;pwd;cd keras-example;curl --request POST -H 'Content-Type: image/jpeg' --data-binary 'elephant.jpg' $ENDPOINT"
+      run: pwd;cd keras-example;curl --request POST -H 'Content-Type: image/jpeg' --data-binary 'elephant.jpg' $ENDPOINT
