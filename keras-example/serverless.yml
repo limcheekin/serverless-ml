@@ -32,12 +32,12 @@ functions:
       - http:
           path: /get-image-name
           method: post
-          request:
+          #request:
             # REF: https://www.serverless.com/framework/docs/providers/aws/events/apigateway/#request-templates
-            template:
-              image/jpeg: '{ "stage" : "$context.stage" }'
-              image/png: '{ "stage" : "$context.stage" }'
-            passThrough: NEVER  
+          #  template:
+          #    image/jpeg: '{ "stage" : "$context.stage" }'
+          #    image/png: '{ "stage" : "$context.stage" }'
+          #  passThrough: NEVER  
 
 plugins:
   - serverless-plugin-warmup
