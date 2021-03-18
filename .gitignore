@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+**/package-lock.json
+**/node_modules/**
+**/.warmup/**
+**/.vscode/**
+**/.serverless/**

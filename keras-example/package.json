@@ -1,0 +1,9 @@
+{
+    "name": "classify-image",
+    "description": "",
+    "version": "0.1.0",
+    "devDependencies": {
+        "serverless-api-gateway-throttling": "^1.1.0",
+        "serverless-plugin-warmup": "^5.2.1"
+    }
+}
