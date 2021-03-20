@@ -27,7 +27,8 @@ functions:
   predict-image:
     image: 
       name: appimage 
-    memorySize: 1024
+    memorySize: 2048
+    timeout: 300 
     events:
       - http:
           path: /get-image-name
