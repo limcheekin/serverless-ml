@@ -45,9 +45,9 @@ def handler(event, context):
       data = json.loads(event['body'])
       print("data['name']", data['name'])
       file_content = base64.b64decode(data['file'])
-      tmp_image_file = tempfile.TemporaryFile()
+      tmp_image_file = tempfile.NamedTemporaryFile()
       tmp_image_file.write(file_content)
-      print(tmp_image_file.name)
+      print('tmp_image_file.name', tmp_image_file.name)
 
       img = image.load_img(tmp_image_file.name, target_size=(224, 224))
       x = image.img_to_array(img)
