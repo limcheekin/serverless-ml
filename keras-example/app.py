@@ -1,5 +1,5 @@
 import json
-import base64
+#import base64
 import tempfile
 #import keras.applications
 from keras.applications.resnet50 import ResNet50, preprocess_input, decode_predictions
@@ -37,7 +37,8 @@ def handler(event, context):
 
     print("event['isBase64Encoded']", event['isBase64Encoded'])
     # REF: https://medium.com/swlh/upload-binary-files-to-s3-using-aws-api-gateway-with-aws-lambda-2b4ba8c70b8e
-    file_content = base64.b64decode(event['body'])
+    # file_content = base64.b64decode(event['body'])
+    file_content = event['body']
     
     tmp_image_file = tempfile.TemporaryFile()
     tmp_image_file.write(file_content)
