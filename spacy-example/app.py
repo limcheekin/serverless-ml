@@ -19,10 +19,10 @@ print("directories", d)
 #import en_core_web_sm
 
 #MODEL = en_core_web_sm.load()
-#MODEL = spacy.load('en_core_web_sm')
+MODEL = spacy.load('en_core_web_sm')
 #MODEL = spacy.load('/var/task/en_core_web_sm/en_core_web_sm-3.0.0')
 # REF: https://github.com/keithrozario/Klayers/issues/97
-MODEL = spacy.load("/opt/en_core_web_sm-2.2.5/en_core_web_sm/en_core_web_sm-2.2.5")
+#MODEL = spacy.load("/opt/en_core_web_sm-2.2.5/en_core_web_sm/en_core_web_sm-2.2.5")
 print('model loaded')
 
 def create_ner_spans(text):
@@ -38,7 +38,7 @@ def create_ner_spans(text):
     return spans
 
 
-def handle_request(event, context):
+def handler(event, context):
     body = {
         "message": "OK",
     }
@@ -75,7 +75,7 @@ def do_main():
         'body': 'Jim bought 300 shares of Acme Corp. in 2006.',
     }
 
-    response = handle_request(event, None)
+    response = handler(event, None)
     body = json.loads(response['body'])
     print('body:', body)
 

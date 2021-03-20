@@ -4,37 +4,34 @@ frameworkVersion: '2'
 
 provider:
   name: aws
-  runtime: python3.8
-  lambdaHashingVersion: 20201221
+  # REF: https://www.serverless.com/blog/container-support-for-lambda
+  ecr:
+    # In this section you can define images that will be built locally and uploaded to ECR
+    images:
+      appimage:
+        path: ./
   apiGateway:
     shouldStartNameWithService: true
+  lambdaHashingVersion: 20201221  
   stage: dev
   region: us-east-1
   # REF: https://www.serverless.com/framework/docs/providers/aws/guide/layers/
   #      https://towardsdatascience.com/quickstart-spacy-on-aws-lambda-up-and-running-in-10-minutes-e347037a0ef8
-  layers:
-  - arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy:41
-  - arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy_model_en_small:1
+  #layers:
+  #- arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy:41
+  #- arn:aws:lambda:us-east-1:770693421928:layer:Klayers-python38-spacy_model_en_small:1
   iam:
     role:
       statements:
       - Effect: 'Allow'
         Action:
           - 'lambda:InvokeFunction'
-        Resource: "*"  
-
-package:
-  exclude:
-    - .npmignore
-    - .vscode/**
-    - package.json
-    - package-lock.json
-    - (*).ipynb
-    - node_modules/**
+        Resource: "*"
 
 functions:
   recognize-named-entites:
-    handler: handler.handle_request
+    image: 
+      name: appimage
     memorySize: 1536
     timeout: 30
     events:
@@ -43,18 +40,10 @@ functions:
           method: post
 
 plugins:
-  - serverless-python-requirements
   - serverless-plugin-warmup
   - serverless-api-gateway-throttling
 
-custom:
-  pythonRequirements:
-    dockerizePip: true
-    slim: true
-    #zip: true
-    #noDeploy: []
-    #useDownloadCache: true
-    #useStaticCache: true    
+custom:    
   # https://github.com/juanjoDiaz/serverless-plugin-warmup  
   warmup:
     twentyFourHoursWarmer:
