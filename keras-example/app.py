@@ -41,18 +41,13 @@ def handler(event, context):
       body['message'] = 'WarmUP - Keep the Lambda warm!'
 
     else: 
-      print("event['isBase64Encoded']", event['isBase64Encoded'])
+      print("event", event)
       # REF: https://medium.com/@shresthshruti09/image-upload-on-aws-s3-using-api-gateway-and-lambda-in-python-4039276b7ca7
-      print event['body']
-      data = json.loads(event['body'])
-      name = data['name']
-      image = data['file']
-      image = image[image.find(",")+1:]
-      file_content = base64.b64decode(image + "===")
+      #file_content = base64.b64decode(image)
 
       #file_content = base64.b64decode(event['body'])
       #file_content = event['body']
-      
+      file_content = 'nothing'
       tmp_image_file = tempfile.TemporaryFile()
       tmp_image_file.write(file_content)
       print(tmp_image_file.name)
