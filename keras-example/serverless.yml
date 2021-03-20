@@ -12,6 +12,10 @@ provider:
         path: ./  
   apiGateway:
     shouldStartNameWithService: true
+    # REF: https://www.serverless.com/blog/framework-release-v142
+    binaryMediaTypes:
+      - 'image/png'
+      - ‘image/jpeg’
   lambdaHashingVersion: 20201221
   stage: dev
   region: us-east-1
