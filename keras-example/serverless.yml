@@ -28,7 +28,7 @@ functions:
     image: 
       name: appimage 
     memorySize: 2048
-    timeout: 300 
+    timeout: 30 
     events:
       - http:
           path: /get-image-name
