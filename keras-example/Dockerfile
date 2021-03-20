@@ -32,7 +32,7 @@ COPY requirements.txt ./
 RUN pip install -U pip setuptools wheel
 RUN pip install -r requirements.txt
 
-# Replace Pillow with Pillow-SIMD to take advantage of AVX2
-RUN pip uninstall -y pillow && CC="cc -mavx2" pip install -U --force-reinstall pillow-simd
+# Install Pillow-SIMD to take advantage of AVX2
+RUN CC="cc -mavx2" pip install -U --force-reinstall pillow-simd
 
 CMD ["app.handler"]
