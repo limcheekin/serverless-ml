@@ -1,5 +1,5 @@
 import json
-#import base64
+import base64
 import tempfile
 #import keras.applications
 from keras.applications.resnet50 import ResNet50, preprocess_input, decode_predictions
@@ -33,32 +33,44 @@ print('model loaded\n')
 #     "isBase64Encoded": "A boolean flag to indicate if the applicable request payload is Base64-encode"
 # }
 def handler(event, context):
-    body = {}
+    body = {
+        "message": "OK",
+    }
 
-    print("event['isBase64Encoded']", event['isBase64Encoded'])
-    # REF: https://medium.com/swlh/upload-binary-files-to-s3-using-aws-api-gateway-with-aws-lambda-2b4ba8c70b8e
-    # file_content = base64.b64decode(event['body'])
-    file_content = event['body']
-    
-    tmp_image_file = tempfile.TemporaryFile()
-    tmp_image_file.write(file_content)
-    print(tmp_image_file.name)
+    if event.get("source") == "serverless-plugin-warmup":
+      body['message'] = 'WarmUP - Keep the Lambda warm!'
 
-    img = image.load_img(tmp_image_file.name, target_size=(224, 224))
-    x = image.img_to_array(img)
-    x = np.expand_dims(x, axis=0) 
-    x = preprocess_input(x)
-    tmp_image_file.close()
-    
-    # predict image classes and decode predictions
-    predictions = model.predict(x)
-    decoded_predictions = decode_predictions(predictions, top=3)[0]
-    predictions_list = []
-    for pred in decoded_predictions:
-        predictions_list.append({'label': pred[1].replace('_', ' ').capitalize(), 'probability': float(pred[2])})
+    else: 
+      print("event['isBase64Encoded']", event['isBase64Encoded'])
+      # REF: https://medium.com/@shresthshruti09/image-upload-on-aws-s3-using-api-gateway-and-lambda-in-python-4039276b7ca7
+      print event['body']
+      data = json.loads(event['body'])
+      name = data['name']
+      image = data['file']
+      image = image[image.find(",")+1:]
+      file_content = base64.b64decode(image + "===")
 
-    body['message'] = 'OK'
-    body['predictions'] = predictions_list
+      #file_content = base64.b64decode(event['body'])
+      #file_content = event['body']
+      
+      tmp_image_file = tempfile.TemporaryFile()
+      tmp_image_file.write(file_content)
+      print(tmp_image_file.name)
+
+      img = image.load_img(tmp_image_file.name, target_size=(224, 224))
+      x = image.img_to_array(img)
+      x = np.expand_dims(x, axis=0) 
+      x = preprocess_input(x)
+      tmp_image_file.close()
+      
+      # predict image classes and decode predictions
+      predictions = model.predict(x)
+      decoded_predictions = decode_predictions(predictions, top=3)[0]
+      predictions_list = []
+      for pred in decoded_predictions:
+          predictions_list.append({'label': pred[1].replace('_', ' ').capitalize(), 'probability': float(pred[2])})
+
+      body['predictions'] = predictions_list
 
     response = {
         "statusCode": 200,
