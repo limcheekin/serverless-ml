@@ -43,11 +43,8 @@ def handler(event, context):
     else: 
       print("event", event)
       # REF: https://medium.com/@shresthshruti09/image-upload-on-aws-s3-using-api-gateway-and-lambda-in-python-4039276b7ca7
-      #file_content = base64.b64decode(image)
-
-      #file_content = base64.b64decode(event['body'])
-      #file_content = event['body']
-      file_content = 'nothing'
+      data = event['body']
+      file_content = base64.b64decode(data['file'])
       tmp_image_file = tempfile.TemporaryFile()
       tmp_image_file.write(file_content)
       print(tmp_image_file.name)
