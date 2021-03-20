@@ -35,6 +35,7 @@ jobs:
       run: pwd;cd keras-example;echo $(sls info --verbose | grep ServiceEndpoint | sed s/ServiceEndpoint\:\ //g | awk '{print $1"/get-image-name"}') > endpoint
     - name: Echo Endpoint URL
       run: pwd;cd keras-example;echo $(cat endpoint)
+    # REF: https://www.youtube.com/watch?v=93VmnUS-E3U
     - name: Encode image file to base64 and save in event.json
       run: pwd;cd keras-example;(echo -n '{ "name":"elephant.jpg", "file":"'; base64 elephant.jpg; echo '" }') > event.json
     - name: Display content of event.json

@@ -45,15 +45,16 @@ def handler(event, context):
       data = json.loads(event['body'])
       print("data['name']", data['name'])
       file_content = base64.b64decode(data['file'])
+      # REF: https://stackoverflow.com/questions/11043372/how-to-use-tempfile-namedtemporaryfile
       tmp_image_file = tempfile.NamedTemporaryFile()
       tmp_image_file.write(file_content)
       print('tmp_image_file.name', tmp_image_file.name)
 
       img = image.load_img(tmp_image_file.name, target_size=(224, 224))
+      tmp_image_file.close()
       x = image.img_to_array(img)
       x = np.expand_dims(x, axis=0) 
       x = preprocess_input(x)
-      tmp_image_file.close()
       
       # predict image classes and decode predictions
       predictions = model.predict(x)
