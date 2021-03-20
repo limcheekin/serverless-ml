@@ -41,9 +41,9 @@ def handler(event, context):
       body['message'] = 'WarmUP - Keep the Lambda warm!'
 
     else: 
-      print("event", event)
       # REF: https://medium.com/@shresthshruti09/image-upload-on-aws-s3-using-api-gateway-and-lambda-in-python-4039276b7ca7
-      data = event['body']
+      data = json.loads(event['body'])
+      print("data['name']", data['name'])
       file_content = base64.b64decode(data['file'])
       tmp_image_file = tempfile.TemporaryFile()
       tmp_image_file.write(file_content)
