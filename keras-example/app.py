@@ -17,11 +17,27 @@ except:
 
 print('model loaded\n')
 
+# REF: https://stackoverflow.com/questions/46098047/how-to-fetch-get-and-post-params-inside-a-aws-lambda-function
+# With the Lambda proxy integration, API Gateway maps the entire client request to the
+# input event parameter of the backend Lambda function as follows:
+# {
+#     "resource": "Resource path",
+#     "path": "Path parameter",
+#     "httpMethod": "Incoming request's method name"
+#     "headers": {Incoming request headers}
+#     "queryStringParameters": {query string parameters }
+#     "pathParameters":  {path parameters}
+#     "stageVariables": {Applicable stage variables}
+#     "requestContext": {Request context, including authorizer-returned key-value pairs}
+#     "body": "A JSON string of the request payload."
+#     "isBase64Encoded": "A boolean flag to indicate if the applicable request payload is Base64-encode"
+# }
 def handler(event, context):
     body = {}
 
+    print("event['isBase64Encoded']", event['isBase64Encoded'])
     # REF: https://medium.com/swlh/upload-binary-files-to-s3-using-aws-api-gateway-with-aws-lambda-2b4ba8c70b8e
-    file_content = base64.b64decode(event['content'])
+    file_content = base64.b64decode(event['body'])
     
     tmp_image_file = tempfile.TemporaryFile()
     tmp_image_file.write(file_content)
