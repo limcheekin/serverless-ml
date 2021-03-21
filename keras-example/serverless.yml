@@ -3,6 +3,8 @@ service: classify-image
 frameworkVersion: '2'
 
 provider:
+  # REF: https://www.serverless.com/framework/docs/providers/aws/guide/functions/
+  versionFunctions: false
   name: aws
   # REF: https://www.serverless.com/blog/container-support-for-lambda
   ecr:
