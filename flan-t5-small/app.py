@@ -1,10 +1,12 @@
-from pyllamacpp.model import Model
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
 import json
 
 print('loading model...')
 
 try:
-    model = Model(ggml_model="ggjt-model.bin", n_ctx=1024)
+    model = AutoModelForSeq2SeqLM.from_pretrained("model/")
+    tokenizer = AutoTokenizer.from_pretrained("model/")
 except:
     print("An exception occurred on loading model.")
 
@@ -22,9 +24,11 @@ def handler(event, context):
     else:
         data = json.loads(event['body'])
         print("data['prompt']", data['prompt'])
-        result = model.generate(data['prompt'], n_predict=200)
+        inputs = tokenizer(data['prompt'], return_tensors="pt")
+        outputs = model.generate(**inputs, max_new_tokens=200)
+        result = tokenizer.batch_decode(outputs, skip_special_tokens=True))
         print(f"result: {result}")
-        body = {
+        body={
             "message": result,
         }
 

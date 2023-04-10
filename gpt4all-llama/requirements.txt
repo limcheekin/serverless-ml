@@ -1,2 +1,0 @@
-# List all python libraries for the lambda
-pyllamacpp==1.0.6

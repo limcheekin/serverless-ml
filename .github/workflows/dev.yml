@@ -2,7 +2,7 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - gpt4all-llama
+      - flan-t5-small
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
@@ -17,10 +17,10 @@ jobs:
       - name: Serverless AWS authentication
         run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
       - name: Deploy Lambda functions
-        run: pwd;cd gpt4all-llama;sls deploy
+        run: pwd;cd ${{ github.ref_name }};sls deploy
       - name: Export Endpoint URL
-        run: pwd;cd gpt4all-llama;echo $(sls info --verbose | grep ServiceEndpoint | sed s/ServiceEndpoint\:\ //g | awk '{print $1"/get-image-name"}') > endpoint
+        run: pwd;cd ${{ github.ref_name }};echo $(sls info --verbose | grep ServiceEndpoint | sed s/ServiceEndpoint\:\ //g | awk '{print $1"/get-image-name"}') > endpoint
       - name: Echo Endpoint URL
-        run: pwd;cd gpt4all-llama;echo $(cat endpoint)
+        run: pwd;cd ${{ github.ref_name }};echo $(cat endpoint)
       - name: Test Lambda functions
-        run: "pwd;cd gpt4all-llama;curl -X POST -H 'Content-Type: application/json' -d @prompt.json $(cat endpoint)"
+        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json $(cat endpoint)"
