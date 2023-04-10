@@ -1,4 +1,4 @@
-service: gpt4all-llama
+service: flan-t5-small
 
 frameworkVersion: "3"
 

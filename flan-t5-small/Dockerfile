@@ -1,11 +1,13 @@
 # REF: https://aws.amazon.com/blogs/machine-learning/using-container-images-to-run-pytorch-models-in-aws-lambda/
+# REF: https://heidloff.net/article/running-llm-flan-t5-locally/
 FROM public.ecr.aws/lambda/python:3.10
 
 COPY app.py ./
-COPY requirements.txt ./
 
 RUN pip install -U pip setuptools wheel
-RUN pip install -r requirements.txt
+RUN pip install transformers
+RUN pip install transformers[torch]
+RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 
 # Load the model related files from Huggingface and store it in the model directory
 RUN mkdir model
