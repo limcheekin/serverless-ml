@@ -26,9 +26,9 @@ def handler(event, context):
         print("data['prompt']", data['prompt'])
         inputs = tokenizer(data['prompt'], return_tensors="pt")
         outputs = model.generate(**inputs, max_new_tokens=200)
-        result = tokenizer.batch_decode(outputs, skip_special_tokens=True))
+        result = tokenizer.batch_decode(outputs, skip_special_tokens=True)
         print(f"result: {result}")
-        body={
+        body = {
             "message": result,
         }
 
