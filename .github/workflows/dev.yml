@@ -1,44 +1,26 @@
-#
-# Github Actions for Serverless Framework
-#
-# Create AWS_KEY and AWS_SECRET secrets in Github repository settings
-# If you're using env.yml file, store its content as ENV Github secret
-#
-# Master branch will be deployed as DEV and every new tag starting with "v**" (e.g. v1.0, v1.2, v2.0, etc) will be deployed as PROD
-#
-# Learn more: https://maxkostinevich.com/blog/how-to-deploy-serverless-applications-using-github-actions/
-#
-
-
 name: Deploy Dev
 on:
   push:
     branches:
-      - keras
+      - gpt4all-llama
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-    - name: Install Serverless Framework
-      run: npm install -g serverless
-    - name: Serverless AWS authentication
-      run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
-    - name: Install plugins
-      run: cd keras-example;npm install
-    - name: Deploy Lambda functions
-      run: pwd;cd keras-example;sls deploy
-    - name: Export Endpoint URL
-      run: pwd;cd keras-example;echo $(sls info --verbose | grep ServiceEndpoint | sed s/ServiceEndpoint\:\ //g | awk '{print $1"/get-image-name"}') > endpoint
-    - name: Echo Endpoint URL
-      run: pwd;cd keras-example;echo $(cat endpoint)
-    # REF: https://www.youtube.com/watch?v=93VmnUS-E3U
-    - name: Encode image file to base64 and save in event.json
-      run: pwd;cd keras-example;(echo -n '{ "name":"elephant.jpg", "file":"'; base64 elephant.jpg; echo '" }') > event.json
-    - name: Display content of event.json
-      run: pwd;cd keras-example;cat event.json      
-    - name: Test Lambda functions
-      run: "pwd;cd keras-example;curl -X POST -H 'Content-Type: application/json' -d @event.json $(cat endpoint)"
+      - uses: actions/checkout@v3
+      - name: Setup NodeJS 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install Serverless Framework
+        run: npm install -g serverless
+      - name: Serverless AWS authentication
+        run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
+      - name: Deploy Lambda functions
+        run: pwd;cd gpt4all-llama;sls deploy
+      - name: Export Endpoint URL
+        run: pwd;cd gpt4all-llama;echo $(sls info --verbose | grep ServiceEndpoint | sed s/ServiceEndpoint\:\ //g | awk '{print $1"/get-image-name"}') > endpoint
+      - name: Echo Endpoint URL
+        run: pwd;cd gpt4all-llama;echo $(cat endpoint)
+      - name: Test Lambda functions
+        run: "pwd;cd gpt4all-llama;curl -X POST -H 'Content-Type: application/json' -d @prompt.json $(cat endpoint)"
