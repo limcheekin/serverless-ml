@@ -19,7 +19,7 @@ jobs:
       - name: Deploy Lambda functions
         run: pwd;cd ${{ github.ref_name }};sls deploy
       - name: Export Endpoint URL
-        run: pwd;cd ${{ github.ref_name }};sls info --verbose;echo $(sls info --verbose | grep ServiceEndpoint | sed s/ServiceEndpoint\:\ //g | awk '{print $1}') > endpoint
+        run: pwd;cd ${{ github.ref_name }};echo $(sls info --verbose | grep endpoint | sed s/endpoint\:\ //g | awk '{print $1}') > endpoint
       - name: Echo Endpoint URL
         run: pwd;cd ${{ github.ref_name }};echo $(cat endpoint)
       - name: Test Lambda functions
