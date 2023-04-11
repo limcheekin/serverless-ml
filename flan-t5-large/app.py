@@ -25,7 +25,13 @@ def handler(event, context):
         data = json.loads(event['body'])
         print("data['prompt']", data['prompt'])
         inputs = tokenizer(data['prompt'], return_tensors="pt")
-        outputs = model.generate(**inputs, max_new_tokens=200)
+        outputs = model.generate(
+            **inputs,
+            min_length=20,
+            max_length=256,
+            temperature=0.0,
+            top_p=1.0,
+            top_k=50)
         result = tokenizer.batch_decode(outputs, skip_special_tokens=True)
         print(f"result: {result}")
         body = {
