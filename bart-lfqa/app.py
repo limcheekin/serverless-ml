@@ -24,15 +24,25 @@ def handler(event, context):
     else:
         data = json.loads(event['body'])
         print("data['prompt']", data['prompt'])
-        inputs = tokenizer(data['prompt'], return_tensors="pt")
+        inputs = tokenizer(data['prompt'], truncation=True,
+                           padding=True, return_tensors="pt")
         outputs = model.generate(
-            **inputs,
-            min_length=20,
+            input_ids=inputs["input_ids"],
+            attention_mask=inputs["attention_mask"],
+            min_length=64,
             max_length=256,
-            temperature=0.0,
-            top_p=1.0,
-            top_k=50)
-        result = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+            do_sample=False,
+            early_stopping=True,
+            num_beams=8,
+            temperature=1.0,
+            top_k=None,
+            top_p=None,
+            eos_token_id=tokenizer.eos_token_id,
+            no_repeat_ngram_size=3,
+            num_return_sequences=1)
+        result = tokenizer.batch_decode(
+            outputs, skip_special_tokens=True,
+            clean_up_tokenization_spaces=True)
         print(f"result: {result}")
         body = {
             "message": result,

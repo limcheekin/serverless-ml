@@ -1,4 +1,4 @@
-service: flan-t5-base
+service: bart-lfqa
 
 frameworkVersion: "3"
 
@@ -24,7 +24,7 @@ functions:
   chat:
     image:
       name: appimage
-    memorySize: 4096
+    memorySize: 2048
     timeout:
       900
       # https://www.serverless.com/framework/docs/providers/aws/guide/functions#lambda-function-urls
