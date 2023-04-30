@@ -11,7 +11,7 @@ provider:
       appimage:
         path: ./
   stage: dev
-  region: ap-southeast-1
+  region: us-east-1
   iam:
     role:
       statements:

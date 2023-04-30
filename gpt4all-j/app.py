@@ -1,12 +1,12 @@
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from gpt4allj import Model
 
 import json
 
 print('loading model...')
 
 try:
-    model = AutoModelForSeq2SeqLM.from_pretrained("model/")
-    tokenizer = AutoTokenizer.from_pretrained("model/")
+    # model = Model('./models/ggml-gpt4all-j', instructions='avx')
+    model = Model('./model/ggml-gpt4all-j')
 except:
     print("An exception occurred on loading model.")
 
@@ -24,15 +24,7 @@ def handler(event, context):
     else:
         data = json.loads(event['body'])
         print("data['prompt']", data['prompt'])
-        inputs = tokenizer(data['prompt'], return_tensors="pt")
-        outputs = model.generate(
-            **inputs,
-            min_length=20,
-            max_length=256,
-            temperature=0.0,
-            top_p=1.0,
-            top_k=50)
-        result = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+        result = model.generate(data['prompt'])
         print(f"result: {result}")
         body = {
             "message": result,
