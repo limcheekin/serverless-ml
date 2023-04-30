@@ -1,4 +1,4 @@
-service: flan-t5-large
+service: gpt4all-j
 
 frameworkVersion: "3"
 

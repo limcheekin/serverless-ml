@@ -133,3 +133,6 @@ dmypy.json
 **/.warmup/**
 **/.vscode/**
 **/.serverless/**
+
+# Model related files
+gpt4all-j/models/
