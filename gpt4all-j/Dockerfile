@@ -4,6 +4,33 @@ FROM public.ecr.aws/lambda/python:3.10
 
 COPY app.py ./
 
+# Install dependencies
+# REF: https://github.com/atilaromero/gpt4all-j-in-docker/blob/master/Dockerfile
+RUN apt update
+RUN apt-get install -y \
+    libglib2.0-0 \
+    libbrotli1 \
+    libdrm2 \
+    libgbm1 \
+    libjpeg-turbo8 \
+    libxcb-glx0 \
+    libdbus-1-3 \
+    libegl1 \
+    libpcre2-16-0 \
+    libglx0 \
+    libopengl0 \
+    libpng16-16 \
+    libharfbuzz0b \
+    libfontconfig1 \
+    libxkbcommon0 \
+    libxkbcommon-x11-0 \
+    libxcb-cursor0 \
+    libxcb-icccm4 \
+    libxcb-keysyms1 \
+    libxcb-randr0 \
+    libxcb-shape0 \
+    libsm6
+
 RUN pip install -U pip setuptools wheel
 RUN pip install gpt4all-j
 
