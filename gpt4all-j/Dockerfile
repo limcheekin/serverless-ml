@@ -1,12 +1,12 @@
 # REF: https://aws.amazon.com/blogs/machine-learning/using-container-images-to-run-pytorch-models-in-aws-lambda/
 # REF: https://heidloff.net/article/running-llm-flan-t5-locally/
-FROM public.ecr.aws/lambda/python:3.10
+FROM public.ecr.aws/lambda/provided:al2.2023.04.17.19
 
 COPY app.py ./
 
 # Install dependencies
 # REF: https://github.com/atilaromero/gpt4all-j-in-docker/blob/master/Dockerfile
-RUN apt-get update
+RUN apt-get -y update
 RUN apt-get install -y \
     libglib2.0-0 \
     libbrotli1 \
