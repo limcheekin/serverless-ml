@@ -14,7 +14,7 @@ FROM python:${RUNTIME_VERSION}-slim-bullseye AS python-slim-bullseye
 #    libstdc++
 
 # Stage 2 - build function and dependencies
-FROM ubuntu:jammy AS build-image
+FROM python-slim-bullseye AS build-image
 # Install aws-lambda-cpp build dependencies
 # REF: https://docs.aws.amazon.com/lambda/latest/dg/images-create.html
 RUN apt-get update
@@ -32,7 +32,7 @@ RUN apt-get install -y \
     libbrotli1 \
     libdrm2 \
     libgbm1 \
-    libjpeg-turbo8 \
+    libjpeg62-turbo \
     libxcb-glx0 \
     libdbus-1-3 \
     libegl1 \
@@ -60,9 +60,9 @@ RUN mkdir -p ${FUNCTION_DIR}
 # Copy handler function
 COPY app.py ${FUNCTION_DIR}
 # Optional – Install the function's dependencies
-RUN python3 -m pip install -r requirements.txt --target ${FUNCTION_DIR}
+RUN python${RUNTIME_VERSION} -m pip install -r requirements.txt --target ${FUNCTION_DIR}
 # Install Lambda Runtime Interface Client for Python
-RUN python3 -m pip install awslambdaric --target ${FUNCTION_DIR}
+RUN python${RUNTIME_VERSION} -m pip install awslambdaric --target ${FUNCTION_DIR}
 
 # download the model file
 RUN mkdir ${FUNCTION_DIR}/model
