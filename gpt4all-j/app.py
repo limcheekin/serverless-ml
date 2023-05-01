@@ -5,7 +5,7 @@ import json
 print('loading model...')
 
 try:
-    model = Model('./model/ggml-gpt4all-j')
+    model = Model('./model/ggml-gpt4all-j', instructions='avx')
 
 except:
     print("An exception occurred on loading model.")
