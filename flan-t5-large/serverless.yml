@@ -24,7 +24,7 @@ functions:
   chat:
     image:
       name: appimage
-    memorySize: 6144
+    memorySize: 7168
     environment:
       TRANSFORMERS_CACHE: /tmp
     timeout:
