@@ -28,7 +28,7 @@ RUN apt-get install -y \
 # Install gpt4all-j runtime dependencies
 # REF: https://github.com/atilaromero/gpt4all-j-in-docker/blob/master/Dockerfile
 RUN apt-get install -y
-    libglib2.0-0 \
+    build-essential \
     libbrotli1 \
     libdrm2 \
     libgbm1 \
