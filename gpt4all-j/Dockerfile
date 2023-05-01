@@ -1,5 +1,5 @@
 # REF: https://aws.amazon.com/blogs/aws/new-for-aws-lambda-container-image-support/
-# The download size of `python:3.10-slim-bulleye` is **45MB**¹. Its uncompressed on-disk size is **125MB**¹.
+# The download size of `python:3.10-slim-bullseye` is **45MB**¹. Its uncompressed on-disk size is **125MB**¹.
 # (1) The best Docker base image for your Python application (March 2023). https://pythonspeed.com/articles/base-image-python-docker-images/.
 # (2) Reduce the size of container images with DockerSlim. https://developers.redhat.com/articles/2022/01/17/reduce-size-container-images-dockerslim.
 # Define global args
@@ -8,13 +8,13 @@ ARG RUNTIME_VERSION="3.10"
 
 # Stage 1 - bundle base image + runtime
 # Grab a fresh copy of the image and install GCC
-FROM python:${RUNTIME_VERSION}-slim-buster AS python-slim-buster
+FROM python:${RUNTIME_VERSION}-slim-bullseye AS python-slim-bullseye
 # Install GCC (Alpine uses musl but we compile and link dependencies with GCC)
 #RUN apk add --no-cache \
 #    libstdc++
 
 # Stage 2 - build function and dependencies
-FROM python-slim-buster AS build-image
+FROM python-slim-bullseye AS build-image
 # Install aws-lambda-cpp build dependencies
 # REF: https://docs.aws.amazon.com/lambda/latest/dg/images-create.html
 RUN apt-get update
@@ -28,7 +28,7 @@ RUN apt-get install -y \
 # Install gpt4all-j runtime dependencies
 # REF: https://github.com/atilaromero/gpt4all-j-in-docker/blob/master/Dockerfile
 RUN apt-get install -y
-    libglib2.0-0 \
+#    libglib2.0-0 \
     libbrotli1 \
     libdrm2 \
     libgbm1 \
@@ -70,7 +70,7 @@ RUN curl -L https://gpt4all.io/models/ggml-gpt4all-j.bin -o ${FUNCTION_DIR}/mode
 
 # Stage 3 - final runtime image
 # Grab a fresh copy of the Python image
-FROM python-slim-buster
+FROM python-slim-bullseye
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
 # Set working directory to function root directory
