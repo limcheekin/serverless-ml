@@ -14,10 +14,10 @@ FROM python:${RUNTIME_VERSION}-slim-bullseye AS python-slim-bullseye
 #    libstdc++
 
 # Stage 2 - build function and dependencies
-FROM ubuntu:jammy AS build-image
+FROM python-slim-bullseye AS build-image
 # Install aws-lambda-cpp build dependencies
 # REF: https://docs.aws.amazon.com/lambda/latest/dg/images-create.html
-RUN apt update
+RUN apt-get update
 RUN apt-get install -y \
   g++ \
   make \
@@ -27,7 +27,7 @@ RUN apt-get install -y \
 
 # Install gpt4all-j runtime dependencies
 # REF: https://github.com/atilaromero/gpt4all-j-in-docker/blob/master/Dockerfile
-RUN apt-get install -y
+RUN apt-get install -y \
     libglib2.0-0 \
     libbrotli1 \
     libdrm2 \
