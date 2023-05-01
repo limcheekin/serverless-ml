@@ -8,13 +8,13 @@ ARG RUNTIME_VERSION="3.10"
 
 # Stage 1 - bundle base image + runtime
 # Grab a fresh copy of the image and install GCC
-FROM python:${RUNTIME_VERSION}-slim-bullseye AS python-slim-bullseye
+#FROM python:${RUNTIME_VERSION}-slim-bullseye AS python-slim-bullseye
 # Install GCC (Alpine uses musl but we compile and link dependencies with GCC)
 #RUN apk add --no-cache \
 #    libstdc++
 
 # Stage 2 - build function and dependencies
-FROM python-slim-bullseye AS build-image
+FROM ubuntu:jammy AS build-image
 # Install aws-lambda-cpp build dependencies
 # REF: https://docs.aws.amazon.com/lambda/latest/dg/images-create.html
 RUN apt-get update
@@ -28,7 +28,7 @@ RUN apt-get install -y \
 # Install gpt4all-j runtime dependencies
 # REF: https://github.com/atilaromero/gpt4all-j-in-docker/blob/master/Dockerfile
 RUN apt-get install -y
-#    libglib2.0-0 \
+    libglib2.0-0 \
     libbrotli1 \
     libdrm2 \
     libgbm1 \
