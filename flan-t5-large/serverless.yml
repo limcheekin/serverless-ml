@@ -24,7 +24,9 @@ functions:
   chat:
     image:
       name: appimage
-    memorySize: 5120
+    memorySize: 6144
+    environment:
+      TRANSFORMERS_CACHE: /tmp
     timeout:
       900
       # https://www.serverless.com/framework/docs/providers/aws/guide/functions#lambda-function-urls
