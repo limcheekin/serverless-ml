@@ -41,7 +41,7 @@ RUN python${RUNTIME_VERSION} -m pip install awslambdaric --target ${FUNCTION_DIR
 
 # download the model file
 RUN mkdir ${FUNCTION_DIR}/model
-RUN curl -L https://gpt4all.io/models/ggml-gpt4all-j.bin -o ${FUNCTION_DIR}/model/ggml-gpt4all-j
+RUN curl -L https://gpt4all.io/models/ggml-gpt4all-j-v1.3-groovy.bin -o ${FUNCTION_DIR}/model/ggml-gpt4all-j
 
 # Stage 3 - final runtime image
 # Grab a fresh copy of the Python image
