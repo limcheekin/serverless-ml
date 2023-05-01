@@ -14,7 +14,7 @@ FROM python:${RUNTIME_VERSION}-slim-bullseye AS python-slim-bullseye
 #    libstdc++
 
 # Stage 2 - build function and dependencies
-FROM python-slim-bullseye AS build-image
+FROM ubuntu:jammy AS build-image
 # Install aws-lambda-cpp build dependencies
 # REF: https://docs.aws.amazon.com/lambda/latest/dg/images-create.html
 RUN apt-get update
