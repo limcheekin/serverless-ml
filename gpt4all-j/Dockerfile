@@ -16,16 +16,14 @@ FROM python:${RUNTIME_VERSION}-slim-bullseye AS python-slim-bullseye
 # Stage 2 - build function and dependencies
 FROM python-slim-bullseye AS build-image
 # Install aws-lambda-cpp build dependencies
-RUN apt-get update -y
-RUN apt-get install -y
-    build-base \
-    libtool \
-    autoconf \
-    automake \
-    libexecinfo-dev \
-    make \
-    cmake \
-    libcurl
+# REF: https://docs.aws.amazon.com/lambda/latest/dg/images-create.html
+RUN apt-get update
+RUN apt-get install -y \
+  g++ \
+  make \
+  cmake \
+  unzip \
+  libcurl4-openssl-dev
 
 # Install gpt4all-j runtime dependencies
 # REF: https://github.com/atilaromero/gpt4all-j-in-docker/blob/master/Dockerfile
