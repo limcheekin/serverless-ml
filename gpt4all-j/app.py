@@ -36,7 +36,7 @@ def handler(event, context):
     else:
         data = json.loads(event['body'])
         print("prompt", data['prompt'])
-        if data['params']:
+        if 'params' in data:
             print("params", data['params'])
             default_params.update(data['params'])
             print("updated default_params", default_params)
