@@ -36,8 +36,8 @@ def handler(event, context):
     else:
         data = json.loads(event['body'])
         print("prompt", data['prompt'])
-        print("params", data['params'])
         if data['params']:
+            print("params", data['params'])
             default_params.update(data['params'])
             print("updated default_params", default_params)
         result = model.generate(
