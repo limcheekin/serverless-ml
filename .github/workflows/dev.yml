@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - gpt4all-j
+  workflow_dispatch:
+
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
