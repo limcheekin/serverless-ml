@@ -1,0 +1,4 @@
+scikit-build  
+uvicorn 
+sse-starlette
+llama-cpp-python
