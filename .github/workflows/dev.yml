@@ -2,7 +2,7 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - flan-t5-large
+      - openllama-7b-300bt
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
