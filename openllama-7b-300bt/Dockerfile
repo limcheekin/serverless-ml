@@ -9,15 +9,17 @@ ARG RUNTIME_VERSION="3.10"
 # Stage 1 - bundle base image + runtime
 # Grab a fresh copy of the image and install GCC
 FROM python:${RUNTIME_VERSION}-slim-bullseye AS python-slim-bullseye
-# Install GCC (Alpine uses musl but we compile and link dependencies with GCC)
-#RUN apk add --no-cache \
-#    libstdc++
 
 # Stage 2 - build function and dependencies
 FROM python-slim-bullseye AS build-image
 # Install aws-lambda-cpp build dependencies
 # REF: https://docs.aws.amazon.com/lambda/latest/dg/images-create.html
-RUN apt update && apt install -y libopenblas-dev ninja-build build-essential
+RUN apt-get update && \
+    apt-get install -y \
+    libopenblas-dev \
+    ninja-build \
+    build-essential \
+    curl
 
 # Include global args in this stage of the build
 ARG FUNCTION_DIR
