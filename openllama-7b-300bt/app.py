@@ -22,7 +22,8 @@ def handler(event, context):
     else:
         data = json.loads(event['body'])
         print("data['prompt']", data['prompt'])
-        result = llm(data['prompt'], max_tokens=32, stop=["Q:", "\n"], echo=True)        result = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+        result = llm(data['prompt'], max_tokens=32,
+                     stop=["Q:", "\n"], echo=True)
         print(f"result: {result}")
         body = {
             "message": result,
