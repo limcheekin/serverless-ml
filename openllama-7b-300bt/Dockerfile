@@ -44,10 +44,9 @@ RUN curl -L https://huggingface.co/vihangd/open_llama_7b_300bt_ggml/resolve/main
 FROM python-slim-bullseye
 
 # Install runtime dependencies
-#RUN apt-get update && \
-#    apt-get install -y \
-#    libglib2.0-0 \
-#    libbrotli1 \
+RUN apt-get update && \
+    apt-get install -y \
+    libopenblas-dev
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
