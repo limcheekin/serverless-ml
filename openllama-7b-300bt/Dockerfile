@@ -46,7 +46,9 @@ FROM python-slim-bullseye
 # Install runtime dependencies
 RUN apt-get update && \
     apt-get install -y \
-    libopenblas-dev
+    libopenblas-dev \
+    ninja-build \
+    build-essential
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
