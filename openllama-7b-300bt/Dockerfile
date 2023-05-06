@@ -30,7 +30,8 @@ RUN mkdir -p ${FUNCTION_DIR}
 COPY app.py ${FUNCTION_DIR}
 # Optional – Install the function's dependencies
 COPY requirements.txt ./
-RUN python${RUNTIME_VERSION} -m pip install -r requirements.txt --target ${FUNCTION_DIR}
+# REF: https://github.com/abetlen/llama-cpp-python/blob/main/Dockerfile
+RUN LLAMA_OPENBLAS=1 python${RUNTIME_VERSION} -m pip install -r requirements.txt --target ${FUNCTION_DIR}
 # Install Lambda Runtime Interface Client for Python
 RUN python${RUNTIME_VERSION} -m pip install awslambdaric --target ${FUNCTION_DIR}
 
