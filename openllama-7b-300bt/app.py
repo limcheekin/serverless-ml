@@ -4,7 +4,7 @@ import json
 print('loading model...')
 
 try:
-    llm = Llama(model_path="./model/openllama-7b-300bt-ggml-q8_0.bin")
+    llm = Llama(model_path="./model/openllama-7b-300bt-ggml-q4_0.bin")
 except:
     print("An exception occurred on loading model.")
 
