@@ -9,11 +9,11 @@ jobs:
     steps:
       - name: Checkout own repo
         uses: actions/checkout@v3
-      - name: Checkout abetlen/llama-cpp-python repo
+      - name: Checkout limcheekin/llama-cpp-python repo
         uses: actions/checkout@v3
         with:
           submodules: "true"
-          repository: abetlen/llama-cpp-python
+          repository: limcheekin/llama-cpp-python
           path: openllama-7b-300bt/llama-cpp-python
       - name: Setup NodeJS 18
         uses: actions/setup-node@v3
