@@ -19,7 +19,6 @@ RUN apt-get update && \
     libopenblas-dev \
     ninja-build \
     build-essential \
-    cmake \
     curl
 
 # Include global args in this stage of the build
