@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: abetlen/llama-cpp-python
-          path: llama-cpp-python
+          path: openllama-7b-300bt/llama-cpp-python
       - name: Setup NodeJS 18
         uses: actions/setup-node@v3
         with:
@@ -23,7 +23,7 @@ jobs:
       - name: Serverless AWS authentication
         run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
       - name: Deploy Lambda functions
-        run: pwd;ls;cd ${{ github.ref_name }};sls deploy
+        run: pwd;cd ${{ github.ref_name }};ls;sls deploy
       - name: Export Endpoint URL
         run: pwd;cd ${{ github.ref_name }};echo $(sls info --verbose | grep endpoint | sed s/endpoint\:\ //g | awk '{print $1}') > endpoint
       - name: Echo Endpoint URL

@@ -29,7 +29,7 @@ RUN mkdir -p ${FUNCTION_DIR}
 # Copy handler function
 COPY app.py ${FUNCTION_DIR}
 # Optional – Install the function's dependencies
-COPY ../llama-cpp-python/ ${FUNCTION_DIR}
+COPY ./llama-cpp-python/ ${FUNCTION_DIR}
 
 RUN python${RUNTIME_VERSION} -m pip install --upgrade pip pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette
 # REF: https://github.com/abetlen/llama-cpp-python/blob/main/Dockerfile
