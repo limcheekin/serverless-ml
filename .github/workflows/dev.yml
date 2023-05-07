@@ -23,7 +23,7 @@ jobs:
       - name: Serverless AWS authentication
         run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
       - name: Deploy Lambda functions
-        run: pwd;cd ${{ github.ref_name }};sls deploy
+        run: pwd;ls;cd ${{ github.ref_name }};sls deploy
       - name: Export Endpoint URL
         run: pwd;cd ${{ github.ref_name }};echo $(sls info --verbose | grep endpoint | sed s/endpoint\:\ //g | awk '{print $1}') > endpoint
       - name: Echo Endpoint URL
