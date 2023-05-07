@@ -29,9 +29,11 @@ RUN mkdir -p ${FUNCTION_DIR}
 # Copy handler function
 COPY app.py ${FUNCTION_DIR}
 # Optional – Install the function's dependencies
-COPY requirements.txt ./
+COPY llama-cpp-python/ ${FUNCTION_DIR}
+
+RUN python${RUNTIME_VERSION} -m pip install --upgrade pip pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette
 # REF: https://github.com/abetlen/llama-cpp-python/blob/main/Dockerfile
-RUN LLAMA_OPENBLAS=1 python${RUNTIME_VERSION} -m pip install -r requirements.txt --target ${FUNCTION_DIR}
+RUN cd ${FUNCTION_DIR} && LLAMA_OPENBLAS=1 python${RUNTIME_VERSION} setup.py develop
 # Install Lambda Runtime Interface Client for Python
 RUN python${RUNTIME_VERSION} -m pip install awslambdaric --target ${FUNCTION_DIR}
 
@@ -46,9 +48,7 @@ FROM python-slim-bullseye
 # Install runtime dependencies
 RUN apt-get update && \
     apt-get install -y \
-    libopenblas-dev \
-    ninja-build \
-    build-essential
+    libopenblas-dev
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
