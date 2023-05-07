@@ -28,7 +28,10 @@ ARG RUNTIME_VERSION
 RUN mkdir -p ${FUNCTION_DIR}
 # Copy handler function
 COPY app.py ${FUNCTION_DIR}
-# Optional – Install the function's dependencies
+# Install the function's dependencies
+COPY requirements.txt ./
+RUN python${RUNTIME_VERSION} -m pip install -r requirements.txt --target ${FUNCTION_DIR}
+
 COPY ./llama-cpp-python/ ${FUNCTION_DIR}
 
 RUN python${RUNTIME_VERSION} -m pip install --upgrade pip pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette

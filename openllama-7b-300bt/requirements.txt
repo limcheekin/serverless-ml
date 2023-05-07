@@ -1,4 +1,1 @@
-scikit-build  
-uvicorn 
-sse-starlette
-llama-cpp-python
+typing_extensions==4.5.0
