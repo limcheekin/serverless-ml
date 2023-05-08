@@ -42,7 +42,7 @@ RUN python${RUNTIME_VERSION} -m pip install awslambdaric --target ${FUNCTION_DIR
 
 # download the model file
 RUN mkdir ${FUNCTION_DIR}/model
-RUN curl -L https://huggingface.co/vihangd/open_llama_7b_300bt_ggml/resolve/main/ggml-model-q4_0.bin -o ${FUNCTION_DIR}/model/openllama-7b-300bt-ggml-q4_0.bin
+RUN curl -L https://huggingface.co/keldenl/RedPajama-INCITE-Chat-3B-v1-GGML/resolve/main/ggml-model-q4_2.bin -o ${FUNCTION_DIR}/model/redpajama-chat-3b-v1-ggml-model-q4_2.bin
 
 # Stage 3 - final runtime image
 # Grab a fresh copy of the Python image
