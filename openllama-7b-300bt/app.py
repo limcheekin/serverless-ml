@@ -6,7 +6,12 @@ print('loading model...')
 cpu_count = multiprocessing.cpu_count()
 print("cpu_count", cpu_count)
 try:
-    llm = Llama(model_path="./model/openllama-7b-300bt-ggml-q4_0.bin", n_threads=cpu_count)
+    llm = Llama(
+        model_path="./model/openllama-7b-300bt-ggml-q4_0.bin",
+        n_ctx=2048,
+        use_mlock=True, 
+        n_threads=cpu_count
+    )
 except:
     print("An exception occurred on loading model.")
 
