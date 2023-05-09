@@ -1,6 +1,7 @@
 from llama_cpp import Llama
 import json
 import multiprocessing
+import copy
 
 print('loading model...')
 cpu_count = multiprocessing.cpu_count()
@@ -17,6 +18,14 @@ except:
 
 print('model loaded\n')
 
+default_params: dict = {
+    "max_tokens": 128,
+    "temperature": 0.8,
+    "top_p": 0.95,
+    "top_k": 40,
+    "repeat_penalty": 1.1,
+    "stop": []
+}
 
 def handler(event, context):
     body = {
@@ -27,10 +36,21 @@ def handler(event, context):
         body['message'] = 'WarmUP - Keep the Lambda warm!'
 
     else:
+        params = copy.deepcopy(default_params)
         data = json.loads(event['body'])
-        print("data['prompt']", data['prompt'])
-        result = llm(data['prompt'], max_tokens=256,
-                     stop=["Q:", "\n"], echo=True)
+        print("prompt", data['prompt'])
+        if 'params' in data:
+            print("params", data['params'])
+            params.update(data['params'])
+            print("updated params", params)
+        result = llm(data['prompt'], 
+                     max_tokens=params['max_tokens'],
+                     temperature=params['temperature'],
+                     top_p=params['top_p'],
+                     top_k=params['top_k'],
+                     repeat_penalty=params['repeat_penalty'],
+                     stop=params['stop']
+                     )
         print(f"result: {result}")
         body = {
             "message": result,
