@@ -16,7 +16,7 @@ print('model loaded\n')
 
 default_params: dict = {
     "seed": -1,
-    "n_threads": cpu_count,
+    "n_threads": -1,
     "n_predict": 200,
     "top_k": 40,
     "top_p": 0.9,
@@ -43,6 +43,8 @@ def handler(event, context):
             print("params", data['params'])
             params.update(data['params'])
             print("updated params", params)
+            if params['n_threads'] == -1:
+                params['n_threads'] = cpu_count
         result = model.generate(
             prompt=data['prompt'],
             seed=params["seed"],
