@@ -1,4 +1,4 @@
-from gpt4allj import Model
+from gpt4all import GPT4All
 import json
 import multiprocessing
 import copy
@@ -7,7 +7,7 @@ print('loading model...')
 cpu_count = multiprocessing.cpu_count()
 print("cpu_count", cpu_count)
 try:
-    model = Model('./model/ggml-gpt4all-j')
+    model = GPT4All(model_name="ggml-mpt-7b-instruct.bin", model_path="./model", model_type="mpt")
 
 except:
     print("An exception occurred on loading model.")
@@ -15,15 +15,12 @@ except:
 print('model loaded\n')
 
 default_params: dict = {
-    "seed": -1,
-    "n_threads": -1,
-    "n_predict": 200,
+    "max_tokens": 128,
+    "temperature": 0.8,
+    "top_p": 0.95,
     "top_k": 40,
-    "top_p": 0.9,
-    "temperature": 0.9,
-    "repeat_penalty": 1,
-    "repeat_last_n": 64,
-    "n_batch":  8
+    "repeat_penalty": 1.1,
+    "stop": []
 }
 
 
@@ -43,19 +40,14 @@ def handler(event, context):
             print("params", data['params'])
             params.update(data['params'])
             print("updated params", params)
-            if params['n_threads'] == -1:
-                params['n_threads'] = cpu_count
         result = model.generate(
             prompt=data['prompt'],
-            seed=params["seed"],
-            n_threads=params["n_threads"],
-            n_predict=params["n_predict"],
             top_k=params["top_k"],
             top_p=params["top_p"],
-            temp=params["temperature"],
+            temperature=params["temperature"],
             repeat_penalty=params["repeat_penalty"],
-            repeat_last_n=params["repeat_last_n"],
-            n_batch=params["n_batch"]
+            max_tokens=params["max_tokens"],
+            stop=params["stop"]
         )
         print(f"result: {result}")
         body = {

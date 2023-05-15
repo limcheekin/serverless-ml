@@ -2,7 +2,7 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - gpt4all-j
+      - mpt-7b-instruct
   workflow_dispatch:
 
 jobs:
