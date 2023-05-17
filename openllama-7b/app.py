@@ -8,9 +8,9 @@ cpu_count = multiprocessing.cpu_count()
 print("cpu_count", cpu_count)
 try:
     llm = Llama(
-        model_path="./model/openllama-7b-300bt-ggml-q4_0.bin",
+        model_path="./model/ggml-q4_0.bin",
         n_ctx=2048,
-        use_mlock=True, 
+        use_mlock=True,
         n_threads=cpu_count
     )
 except:
@@ -26,6 +26,7 @@ default_params: dict = {
     "repeat_penalty": 1.1,
     "stop": []
 }
+
 
 def handler(event, context):
     body = {
@@ -43,7 +44,7 @@ def handler(event, context):
             print("params", data['params'])
             params.update(data['params'])
             print("updated params", params)
-        result = llm(data['prompt'], 
+        result = llm(data['prompt'],
                      max_tokens=params['max_tokens'],
                      temperature=params['temperature'],
                      top_p=params['top_p'],

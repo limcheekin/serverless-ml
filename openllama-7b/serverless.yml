@@ -1,4 +1,4 @@
-service: openllama-7b-300bt
+service: openllama-7b
 
 frameworkVersion: "3"
 
