@@ -42,7 +42,7 @@ RUN python${RUNTIME_VERSION} -m pip install awslambdaric --target ${FUNCTION_DIR
 
 # download the model file
 RUN mkdir ${FUNCTION_DIR}/model
-RUN curl -L https://huggingface.co/keldenl/RedPajama-INCITE-Chat-3B-v1-GGML/resolve/main/ggml-model-q4_0.bin -o ${FUNCTION_DIR}/model/redpajama-chat-3b-v1-ggml-model-q4_0.bin
+RUN curl -L https://huggingface.co/keldenl/RedPajama-INCITE-Chat-3B-v1-GGML/resolve/main/rp-chat-3b-v1-ggml-model-q4_0.bin -o ${FUNCTION_DIR}/model/ggml-model-q4_0.bin
 #RUN curl https://huggingface.co/keldenl/RedPajama-INCITE-Chat-3B-v1-GGML/raw/main/config.json -o ${FUNCTION_DIR}/model/config.json
 #RUN curl https://huggingface.co/keldenl/RedPajama-INCITE-Chat-3B-v1-GGML/raw/main/generation_config.json -o ${FUNCTION_DIR}/model/generation_config.json
 #RUN curl https://huggingface.co/keldenl/RedPajama-INCITE-Chat-3B-v1-GGML/raw/main/special_tokens_map.json -o ${FUNCTION_DIR}/model/special_tokens_map.json

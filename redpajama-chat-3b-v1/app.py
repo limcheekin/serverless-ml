@@ -7,9 +7,9 @@ cpu_count = multiprocessing.cpu_count()
 print("cpu_count", cpu_count)
 try:
     llm = Llama(
-        model_path="./model/redpajama-chat-3b-v1-ggml-model-q4_0.bin",
+        model_path="./model/ggml-model-q4_0.bin",
         n_ctx=2048,
-        use_mlock=True, 
+        use_mlock=True,
         n_threads=cpu_count
     )
 except:
