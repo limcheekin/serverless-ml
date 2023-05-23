@@ -10,9 +10,9 @@ jobs:
       - name: Checkout own repo
         uses: actions/checkout@v3
       - name: Checkout lmsys/fastchat-t5-3b-v1.0 repo
-      - run: |
-        cd fastchat-t5-3b-ct2
-        git clone https://huggingface.co/lmsys/fastchat-t5-3b-v1.0 fastchat-t5-3b
+        run: |
+          cd fastchat-t5-3b-ct2
+          git clone https://huggingface.co/lmsys/fastchat-t5-3b-v1.0 fastchat-t5-3b
       - name: Setup NodeJS 18
         uses: actions/setup-node@v3
         with:
