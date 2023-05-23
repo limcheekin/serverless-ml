@@ -7,6 +7,13 @@ jobs:
   deploy-dev:
     runs-on: macos-latest
     steps:
+      - name: Setup docker
+        uses: docker-practice/actions-setup-docker@master
+        timeout-minutes: 12
+        run: |
+          set -x
+          docker version
+          docker run --rm hello-world
       - name: Checkout own repo
         uses: actions/checkout@v3
       - name: Setup NodeJS 18
