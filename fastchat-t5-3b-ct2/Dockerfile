@@ -11,7 +11,7 @@ RUN pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
 
 RUN ./download_fastchat-t5-3b.sh
 
-RUN ct2-transformers-converter --model lmsys/fastchat-t5-3b --output_dir lmsys/fastchat-t5-3b-ct2 --quantization int8
+RUN ct2-transformers-converter --model lmsys/fastchat-t5-3b --output_dir lmsys/fastchat-t5-3b-ct2 --quantization int8 --low_cpu_mem_usage
 
 RUN rm lmsys/fastchat-t5-3b/pytorch_model.bin
 
