@@ -17,8 +17,8 @@ RUN curl https://huggingface.co/google/flan-t5-small/raw/main/generation_config.
 RUN curl https://huggingface.co/google/flan-t5-small/raw/main/tokenizer.json -o ./google/flan-t5-small/tokenizer.json
 RUN curl https://huggingface.co/google/flan-t5-small/raw/main/tokenizer_config.json -o ./google/flan-t5-small/tokenizer_config.json
 RUN curl https://huggingface.co/google/flan-t5-small/raw/main/special_tokens_map.json -o ./google/flan-t5-small/special_tokens_map.json
-RUN curl https://huggingface.co/google/flan-t5-small/resolve/main/spiece.model -o ./google/flan-t5-small/spiece.model
-
+RUN curl -L https://huggingface.co/google/flan-t5-small/resolve/main/spiece.model -o ./google/flan-t5-small/spiece.model
+            
 RUN ct2-transformers-converter --model google/flan-t5-small --output_dir google/flan-t5-small-ct2
 
 CMD ["app.handler"]
