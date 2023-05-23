@@ -1,0 +1,50 @@
+version: 2.1
+
+jobs:
+  deploy-dev:
+    machine: true
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: Install Serverless Framework
+          command: npm install -g serverless
+      - run:
+          name: Serverless AWS authentication
+          command: sls config credentials --provider aws --key $AWS_KEY --secret $AWS_SECRET
+          environment:
+            AWS_KEY: ${{ secrets.AWS_KEY }}
+            AWS_SECRET: ${{ secrets.AWS_SECRET }}
+      - run:
+          name: Deploy Lambda functions
+          command: |
+            pwd
+            cd $CIRCLE_BRANCH
+            sls deploy
+      - run:
+          name: Export Endpoint URL
+          command: |
+            pwd
+            cd $CIRCLE_BRANCH
+            sls info --verbose | grep endpoint | sed 's/endpoint\:\ //g' | awk '{print $1}' > endpoint
+      - run:
+          name: Echo Endpoint URL
+          command: |
+            pwd
+            cd $CIRCLE_BRANCH
+            cat endpoint
+      - run:
+          name: Test Lambda functions
+          command: |
+            pwd
+            cd $CIRCLE_BRANCH
+            curl -X POST -H 'Content-Type: application/json' -d @prompt.json $(cat endpoint)
+
+workflows:
+  deploy-dev:
+    jobs:
+      - deploy-dev:
+          filters:
+            branches:
+              only:
+                - fastchat-t5-3b-ct2
