@@ -5,7 +5,7 @@ FROM public.ecr.aws/lambda/python:3.10
 COPY app.py ./
 
 RUN pip install -U pip setuptools wheel
-RUN pip install transformers ctranslate2
+RUN pip install transformers ctranslate2 sentencepiece
 RUN pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
 
 # Load the model related files from Huggingface and store it in the model directory
