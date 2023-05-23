@@ -1,14 +1,5 @@
 version: 2.1
 
-workflows:
-  deploy-dev:
-    jobs:
-      - deploy-dev:
-          filters:
-            branches:
-              only:
-                - fastchat-t5-3b-ct2
-
 jobs:
   deploy-dev:
     machine: true
@@ -48,3 +39,12 @@ jobs:
             pwd
             cd $CIRCLE_BRANCH
             curl -X POST -H 'Content-Type: application/json' -d @prompt.json $(cat endpoint)
+
+workflows:
+  deploy-dev:
+    jobs:
+      - deploy-dev:
+          filters:
+            branches:
+              only:
+                - fastchat-t5-3b-ct2
