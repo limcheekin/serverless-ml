@@ -2,7 +2,7 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - flan-t5-small
+      - flan-t5-small-ct2
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest

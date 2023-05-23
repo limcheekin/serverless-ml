@@ -1,12 +1,12 @@
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-
+from transformers import AutoTokenizer
+import ctranslate2
 import json
 
 print('loading model...')
 
 try:
-    model = AutoModelForSeq2SeqLM.from_pretrained("model/")
-    tokenizer = AutoTokenizer.from_pretrained("model/")
+    translator = ctranslate2.Translator("google/flan-t5-small-ct2")
+    tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-small")
 except:
     print("An exception occurred on loading model.")
 
@@ -24,9 +24,12 @@ def handler(event, context):
     else:
         data = json.loads(event['body'])
         print("data['prompt']", data['prompt'])
-        inputs = tokenizer(data['prompt'], return_tensors="pt")
-        outputs = model.generate(**inputs, max_new_tokens=200)
-        result = tokenizer.batch_decode(outputs, skip_special_tokens=True)
+        input_tokens = tokenizer.convert_ids_to_tokens(
+            tokenizer.encode(data['prompt']))
+        results = translator.translate_batch([input_tokens])
+        output_tokens = results[0].hypotheses[0]
+        result = tokenizer.decode(
+            tokenizer.convert_tokens_to_ids(output_tokens))
         print(f"result: {result}")
         body = {
             "message": result,
