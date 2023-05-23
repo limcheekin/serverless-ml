@@ -6,7 +6,7 @@ COPY app.py ./
 COPY ./download_fastchat-t5-3b.sh ./
 
 RUN pip install -U pip setuptools wheel
-RUN pip install transformers ctranslate2 sentencepiece
+RUN pip install transformers ctranslate2 sentencepiece accelerate
 RUN pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
 
 RUN ./download_fastchat-t5-3b.sh
