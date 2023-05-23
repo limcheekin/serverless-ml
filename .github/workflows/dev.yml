@@ -5,7 +5,7 @@ on:
       - fastchat-t5-3b-ct2
 jobs:
   deploy-dev:
-    runs-on: macos-latest-xl
+    runs-on: macos-latest
     steps:
       - name: Checkout own repo
         uses: actions/checkout@v3
