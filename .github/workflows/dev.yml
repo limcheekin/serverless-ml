@@ -10,6 +10,7 @@ jobs:
       - name: Setup docker
         uses: docker-practice/actions-setup-docker@master
         timeout-minutes: 12
+      - name: Test docker setup
         run: |
           set -x
           docker version
