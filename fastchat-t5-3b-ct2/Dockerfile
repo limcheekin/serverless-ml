@@ -3,8 +3,6 @@
 FROM public.ecr.aws/lambda/python:3.10
 
 COPY app.py ./
-RUN mkdir lmsys
-COPY fastchat-t5-3b ./lmsys/
 
 RUN pip install -U pip setuptools wheel
 RUN pip install transformers ctranslate2 sentencepiece
