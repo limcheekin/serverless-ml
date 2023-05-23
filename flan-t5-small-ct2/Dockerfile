@@ -19,6 +19,8 @@ RUN curl https://huggingface.co/google/flan-t5-small/raw/main/tokenizer_config.j
 RUN curl https://huggingface.co/google/flan-t5-small/raw/main/special_tokens_map.json -o ./google/flan-t5-small/special_tokens_map.json
 RUN curl -L https://huggingface.co/google/flan-t5-small/resolve/main/spiece.model -o ./google/flan-t5-small/spiece.model
             
-RUN ct2-transformers-converter --model google/flan-t5-small --output_dir google/flan-t5-small-ct2
+RUN ct2-transformers-converter --model google/flan-t5-small --output_dir google/flan-t5-small-ct2 --quantization int8
+
+RUN rm google/flan-t5-small/pytorch_model.bin
 
 CMD ["app.handler"]
