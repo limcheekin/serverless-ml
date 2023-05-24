@@ -6,7 +6,7 @@ print('loading model...')
 
 try:
     translator = ctranslate2.Translator("google/flan-t5-small-ct2")
-    tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-small")
+    tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-small-ct2")
 except:
     print("An exception occurred on loading model.")
 

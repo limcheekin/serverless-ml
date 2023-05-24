@@ -20,7 +20,7 @@ The model is quantized version of the [google/flan-t5-small](https://huggingface
 The model being quantized using [CTranslate2](https://opennmt.net/CTranslate2/) with the following command:
 
 ```
-ct2-transformers-converter --model google/flan-t5-small --output_dir google/flan-t5-small-ct2 --quantization int8
+ct2-transformers-converter --model google/flan-t5-small --output_dir google/flan-t5-small-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json spiece.model --quantization int8 --force
 ```
 
 If you want to perform the quantization yourself, you need to install the following dependencies:

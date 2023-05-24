@@ -23,11 +23,7 @@ RUN curl https://huggingface.co/google/flan-t5-small/raw/main/tokenizer_config.j
 RUN curl https://huggingface.co/google/flan-t5-small/raw/main/special_tokens_map.json -o ./google/flan-t5-small/special_tokens_map.json
 RUN curl -L https://huggingface.co/google/flan-t5-small/resolve/main/spiece.model -o ./google/flan-t5-small/spiece.model
             
-RUN ct2-transformers-converter --model google/flan-t5-small --output_dir google/flan-t5-small-ct2 --quantization int8 --force && \
-    cp google/flan-t5-small/tokenizer.json google/flan-t5-small-ct2/ && \
-    cp google/flan-t5-small/tokenizer_config.json google/flan-t5-small-ct2/ && \
-    cp google/flan-t5-small/special_tokens_map.json google/flan-t5-small-ct2/ && \
-    cp google/flan-t5-small/spiece.model google/flan-t5-small-ct2/
+RUN ct2-transformers-converter --model google/flan-t5-small --output_dir google/flan-t5-small-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json spiece.model --quantization int8 --force
 
 COPY README.md google/flan-t5-small-ct2/
 
