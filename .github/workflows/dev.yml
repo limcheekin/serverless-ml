@@ -1,3 +1,4 @@
+# REF: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
 name: Deploy Dev
 on:
   workflow_dispatch:
@@ -6,7 +7,7 @@ on:
       - fastchat-t5-3b-ct2
 jobs:
   deploy-dev:
-    runs-on: macos-13-xl
+    runs-on: macos-latest
     steps:
       - name: Setup docker
         uses: docker-practice/actions-setup-docker@master
