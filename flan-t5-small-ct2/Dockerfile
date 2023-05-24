@@ -2,6 +2,9 @@
 # REF: https://heidloff.net/article/running-llm-flan-t5-locally/
 FROM public.ecr.aws/lambda/python:3.10
 
+ARG HF_TOKEN
+ENV HF_TOKEN=$HF_TOKEN
+
 COPY app.py ./
 COPY hf_upload_model.py ./
 
