@@ -9,7 +9,7 @@ RUN apt-get update && \
 RUN pip install -U pip setuptools wheel && \
     pip install --no-cache-dir transformers ctranslate2 sentencepiece accelerate && \
     pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu && \
-    pip uninstall -y pip setuptools wheel
+    pip uninstall -y pip wheel
 
 # Download and prepare model
 COPY download_fastchat-t5-3b.sh .
