@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - fastchat-t5-3b-ct2
+      - flan-t5-large-ct2
 jobs:
   deploy-dev:
     runs-on: macos-latest

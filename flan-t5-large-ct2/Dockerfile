@@ -12,21 +12,21 @@ RUN pip install -U pip setuptools wheel && \
     pip uninstall -y pip wheel
 
 # Download and prepare model
-COPY download_fastchat-t5-3b.sh .
-RUN chmod +x download_fastchat-t5-3b.sh && \
-    ./download_fastchat-t5-3b.sh && \
-    rm download_fastchat-t5-3b.sh
+COPY download_flan-t5-large.sh .
+RUN chmod +x download_flan-t5-large.sh && \
+    ./download_flan-t5-large.sh && \
+    rm download_flan-t5-large.sh
 
 # Convert model and cleanup unnecessary files
-RUN ct2-transformers-converter --model lmsys/fastchat-t5-3b --output_dir lmsys/fastchat-t5-3b-ct2 --quantization int8 --low_cpu_mem_usage && \
-    rm -rf lmsys/fastchat-t5-3b/pytorch_model.bin
+RUN ct2-transformers-converter --model google/flan-t5-large --output_dir google/flan-t5-large-ct2 --quantization int8 --low_cpu_mem_usage && \
+    rm -rf google/flan-t5-large/pytorch_model.bin
 
 # Runtime Stage
 FROM public.ecr.aws/lambda/python:3.10
 
 # Copy built files from the build stage
-RUN mkdir lmsys
-COPY --from=build ./lmsys ./lmsys
+RUN mkdir google
+COPY --from=build ./google ./google
 
 RUN pip install -U pip setuptools wheel && \
     pip install --no-cache-dir transformers ctranslate2 sentencepiece && \

@@ -1,4 +1,4 @@
-service: fastchat-t5-3b-ct2
+service: flan-t5-large-ct2
 
 frameworkVersion: "3"
 

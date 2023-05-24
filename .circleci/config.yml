@@ -44,4 +44,4 @@ workflows:
           filters:
             branches:
               only:
-                - fastchat-t5-3b-ct2
+                - flan-t5-large-ct2
