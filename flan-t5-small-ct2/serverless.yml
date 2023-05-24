@@ -10,6 +10,8 @@ provider:
     images:
       appimage:
         path: ./
+        buildArgs:
+          HF_TOKEN: ${env:HF_TOKEN}
   stage: dev
   region: ap-southeast-1
   iam:
