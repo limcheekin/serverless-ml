@@ -6,7 +6,7 @@ on:
       - fastchat-t5-3b-ct2
 jobs:
   deploy-dev:
-    runs-on: macos-latest
+    runs-on: macos-13-xl
     steps:
       - name: Setup docker
         uses: docker-practice/actions-setup-docker@master
