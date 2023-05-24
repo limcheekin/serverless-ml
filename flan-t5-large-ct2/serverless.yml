@@ -25,6 +25,8 @@ functions:
     image:
       name: appimage
     memorySize: 4096
+    environment:
+      TRANSFORMERS_CACHE: /tmp/transformer_cache
     timeout:
       900
       # https://www.serverless.com/framework/docs/providers/aws/guide/functions#lambda-function-urls
