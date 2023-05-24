@@ -2,6 +2,10 @@
 # Build Stage
 FROM python:3.10-slim as build
 
+# Install build dependencies
+RUN apt-get update && \
+    apt-get install -y curl
+
 RUN pip install -U pip setuptools wheel && \
     pip install --no-cache-dir transformers ctranslate2 sentencepiece accelerate && \
     pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu && \
