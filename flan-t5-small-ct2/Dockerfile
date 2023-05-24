@@ -3,6 +3,7 @@
 FROM public.ecr.aws/lambda/python:3.10
 
 COPY app.py ./
+COPY hf_upload_model.py ./
 
 RUN pip install -U pip setuptools wheel
 RUN pip install transformers ctranslate2 sentencepiece
@@ -21,6 +22,13 @@ RUN curl -L https://huggingface.co/google/flan-t5-small/resolve/main/spiece.mode
             
 RUN ct2-transformers-converter --model google/flan-t5-small --output_dir google/flan-t5-small-ct2 --quantization int8
 
-RUN rm google/flan-t5-small/pytorch_model.bin
+COPY google/flan-t5-small/tokenizer.json google/flan-t5-small-ct2/
+COPY google/flan-t5-small/tokenizer_config.json google/flan-t5-small-ct2/
+COPY google/flan-t5-small/special_tokens_map.json google/flan-t5-small-ct2/
+COPY google/flan-t5-small/spiece.model google/flan-t5-small-ct2/
+COPY README.md google/flan-t5-small-ct2/
+
+RUN python hf_upload_model.py && \
+    rm -rf google/flan-t5-small
 
 CMD ["app.handler"]
