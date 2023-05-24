@@ -5,8 +5,8 @@ import json
 print('loading model...')
 
 try:
-    translator = ctranslate2.Translator("google/flan-t5-large-ct2")
-    tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-large")
+    translator = ctranslate2.Translator("google/flan-t5-xl-ct2")
+    tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-xl")
 except:
     print("An exception occurred on loading model.")
 

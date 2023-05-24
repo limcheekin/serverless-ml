@@ -44,4 +44,4 @@ workflows:
           filters:
             branches:
               only:
-                - flan-t5-large-ct2
+                - flan-t5-xl-ct2

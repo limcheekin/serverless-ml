@@ -12,14 +12,14 @@ RUN pip install -U pip setuptools wheel && \
     pip uninstall -y pip wheel
 
 # Download and prepare model
-COPY download_flan-t5-large.sh .
-RUN chmod +x download_flan-t5-large.sh && \
-    ./download_flan-t5-large.sh && \
-    rm download_flan-t5-large.sh
+COPY download_flan-t5-xl.sh .
+RUN chmod +x download_flan-t5-xl.sh && \
+    ./download_flan-t5-xl.sh && \
+    rm download_flan-t5-xl.sh
 
 # Convert model and cleanup unnecessary files
-RUN ct2-transformers-converter --model google/flan-t5-large --output_dir google/flan-t5-large-ct2 --quantization int8 --low_cpu_mem_usage && \
-    rm -rf google/flan-t5-large/pytorch_model.bin
+RUN ct2-transformers-converter --model google/flan-t5-xl --output_dir google/flan-t5-xl-ct2 --quantization int8 --low_cpu_mem_usage && \
+    rm -rf google/flan-t5-xl/*.bin
 
 # Runtime Stage
 FROM public.ecr.aws/lambda/python:3.10

@@ -3,7 +3,7 @@ name: Deploy Dev
 on:
   workflow_dispatch:
     branches:
-      - flan-t5-large-ct2
+      - flan-t5-xl-ct2
 jobs:
   deploy-dev:
     runs-on: macos-latest
