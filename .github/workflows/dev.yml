@@ -1,6 +1,9 @@
 name: Deploy Dev
-on: workflow_dispatch
-
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - fastchat-t5-3b-ct2
 jobs:
   deploy-dev:
     runs-on: macos-latest-xl
