@@ -1,7 +1,7 @@
 # REF: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
 name: Deploy Dev
 on:
-  workflow_dispatch:
+  push:
     branches:
       - flan-t5-xxl-ct2
 jobs:
@@ -27,9 +27,9 @@ jobs:
       - name: Serverless AWS authentication
         run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
       - name: Deploy Lambda functions
-        run: pwd;cd ${{ github.ref_name }};sls deploy
+        run: pwd;cd ${{ github.ref_name }};HF_TOKEN=${{ secrets.HF_TOKEN }} sls deploy
       - name: Export Endpoint URL
-        run: pwd;cd ${{ github.ref_name }};echo $(sls info --verbose | grep endpoint | sed s/endpoint\:\ //g | awk '{print $1}') > endpoint
+        run: pwd;cd ${{ github.ref_name }};echo $(HF_TOKEN= sls info --verbose | grep endpoint | sed s/endpoint\:\ //g | awk '{print $1}') > endpoint
       - name: Echo Endpoint URL
         run: pwd;cd ${{ github.ref_name }};echo $(cat endpoint)
       - name: Test Lambda functions
