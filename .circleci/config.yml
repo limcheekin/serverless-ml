@@ -1,3 +1,8 @@
+# It is currently not possible to do nested virtualization (for example, using the --platform linux flag).
+# The Windows executor currently only supports Windows containers.
+# Running Linux containers on Windows is not possible for now.
+# REF: https://circleci.com/docs/using-windows/#known-issues-and-limitations
+#      https://circleci.com/blog/building-docker-images-for-multiple-os-architectures/
 version: 2.1
 
 orbs:
