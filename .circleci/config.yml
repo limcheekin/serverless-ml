@@ -17,7 +17,7 @@ jobs:
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            HF_TOKEN=$HF_TOKENsls deploy
+            HF_TOKEN=$HF_TOKEN sls deploy
       - run:
           name: Export Endpoint URL
           command: |
