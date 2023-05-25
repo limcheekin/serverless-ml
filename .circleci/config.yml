@@ -1,9 +1,14 @@
 version: 2.1
 
+orbs:
+  win: circleci/windows@5.0 # The Windows orb gives you everything you need to start using the Windows executor.
+
 jobs:
   deploy-dev:
-    machine: true
-    resource_class: large
+    executor:
+      name: win/default # executor type
+      size: large # can be medium, large, xlarge, 2xlarge
+
     steps:
       - checkout
       - run:
@@ -11,32 +16,36 @@ jobs:
           command: npm install -g serverless
       - run:
           name: Serverless AWS authentication
-          command: sls config credentials --provider aws --key $AWS_KEY --secret $AWS_SECRET
+          command: sls config credentials --provider aws --key %AWS_KEY% --secret %AWS_SECRET%
+          environment:
+            AWS_KEY: ${{ secrets.AWS_KEY }}
+            AWS_SECRET: ${{ secrets.AWS_SECRET }}
       - run:
           name: Deploy Lambda functions
           no_output_timeout: 30m
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            HF_TOKEN=$HF_TOKEN sls deploy
+            $env:HF_TOKEN=$env:HF_TOKEN sls deploy
       - run:
           name: Export Endpoint URL
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            HF_TOKEN= sls info --verbose | grep endpoint | sed 's/endpoint\:\ //g' | awk '{print $1}' > endpoint
+            $env:HF_TOKEN= sls info --verbose | Select-String -Pattern "endpoint" | ForEach-Object { $_.ToString().Replace("endpoint: ", "") } > endpoint
       - run:
           name: Echo Endpoint URL
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            cat endpoint
+            Get-Content endpoint
       - run:
           name: Test Lambda functions
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            curl -X POST -H 'Content-Type: application/json' -d @prompt.json $(cat endpoint)
+            $url = Get-Content endpoint
+            Invoke-RestMethod -Uri $url -Method Post -ContentType "application/json" -InFile prompt.json
 
 workflows:
   deploy-dev:
