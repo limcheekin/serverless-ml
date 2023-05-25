@@ -6,46 +6,44 @@ orbs:
 jobs:
   deploy-dev:
     executor:
-      name: win/default # executor type
+      name: win/server-2022 # executor type
       size: large # can be medium, large, xlarge, 2xlarge
+      shell: bash.exe
 
     steps:
       - checkout
+      - run: systeminfo
       - run:
           name: Install Serverless Framework
           command: npm install -g serverless
       - run:
           name: Serverless AWS authentication
-          command: sls config credentials --provider aws --key %AWS_KEY% --secret %AWS_SECRET%
-          environment:
-            AWS_KEY: ${{ secrets.AWS_KEY }}
-            AWS_SECRET: ${{ secrets.AWS_SECRET }}
+          command: sls config credentials --provider aws --key $AWS_KEY --secret $AWS_SECRET
       - run:
           name: Deploy Lambda functions
           no_output_timeout: 30m
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            $env:HF_TOKEN=$env:HF_TOKEN sls deploy
+            HF_TOKEN=$HF_TOKEN sls deploy
       - run:
           name: Export Endpoint URL
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            $env:HF_TOKEN= sls info --verbose | Select-String -Pattern "endpoint" | ForEach-Object { $_.ToString().Replace("endpoint: ", "") } > endpoint
+            HF_TOKEN= sls info --verbose | grep endpoint | sed 's/endpoint\:\ //g' | awk '{print $1}' > endpoint
       - run:
           name: Echo Endpoint URL
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            Get-Content endpoint
+            cat endpoint
       - run:
           name: Test Lambda functions
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            $url = Get-Content endpoint
-            Invoke-RestMethod -Uri $url -Method Post -ContentType "application/json" -InFile prompt.json
+            curl -X POST -H 'Content-Type: application/json' -d @prompt.json $(cat endpoint)
 
 workflows:
   deploy-dev:
