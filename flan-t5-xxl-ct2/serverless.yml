@@ -1,4 +1,4 @@
-service: flan-t5-xl-ct2
+service: flan-t5-xxl-ct2
 
 frameworkVersion: "3"
 
