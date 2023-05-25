@@ -15,7 +15,7 @@ jobs:
       - run: systeminfo
       - run:
           name: Install NodeJS
-          command: nvm install 18 && nvm use 18
+          command: nvm install 18.16.0 && nvm use 18.16.0
       - run:
           name: Install Serverless Framework
           command: npm install -g serverless
