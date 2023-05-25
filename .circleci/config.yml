@@ -17,13 +17,13 @@ jobs:
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            sls deploy
+            HF_TOKEN=$HF_TOKENsls deploy
       - run:
           name: Export Endpoint URL
           command: |
             pwd
             cd $CIRCLE_BRANCH
-            sls info --verbose | grep endpoint | sed 's/endpoint\:\ //g' | awk '{print $1}' > endpoint
+            HF_TOKEN= sls info --verbose | grep endpoint | sed 's/endpoint\:\ //g' | awk '{print $1}' > endpoint
       - run:
           name: Echo Endpoint URL
           command: |
