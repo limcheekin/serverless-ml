@@ -14,7 +14,7 @@ jobs:
           command: sls config credentials --provider aws --key $AWS_KEY --secret $AWS_SECRET
       - run:
           name: Deploy Lambda functions
-          no_output_timeout: 20m
+          no_output_timeout: 30m
           command: |
             pwd
             cd $CIRCLE_BRANCH
