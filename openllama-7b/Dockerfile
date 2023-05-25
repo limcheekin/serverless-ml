@@ -36,13 +36,13 @@ COPY ./llama-cpp-python/ ${FUNCTION_DIR}
 
 RUN python${RUNTIME_VERSION} -m pip install --upgrade pip pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette
 # REF: https://github.com/abetlen/llama-cpp-python/blob/main/Dockerfile
-RUN cd ${FUNCTION_DIR} && LLAMA_OPENBLAS=1 LLAMA_AVX2_ONLY=1 python${RUNTIME_VERSION} setup.py develop
+RUN cd ${FUNCTION_DIR} && CMAKE_ARGS="-DLLAMA_OPENBLAS=on" FORCE_CMAKE=1 python${RUNTIME_VERSION} setup.py develop
 # Install Lambda Runtime Interface Client for Python
 RUN python${RUNTIME_VERSION} -m pip install awslambdaric --target ${FUNCTION_DIR}
 
 # download the model file
 RUN mkdir ${FUNCTION_DIR}/model
-RUN curl -L https://huggingface.co/vihangd/open_llama_7b_400bt_ggml/resolve/main/ggml-model-q4_0.bin -o ${FUNCTION_DIR}/model/ggml-q4_0.bin
+RUN curl -L https://huggingface.co/vihangd/open_llama_7b_700bt_ggml/resolve/main/ggml-model-q4_0.bin -o ${FUNCTION_DIR}/model/ggml-q4_0.bin
 
 # Stage 3 - final runtime image
 # Grab a fresh copy of the Python image
