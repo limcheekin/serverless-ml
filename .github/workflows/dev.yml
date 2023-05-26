@@ -20,11 +20,11 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install Modal client package
+      - name: Install Python packages
         run: |
           pip install modal-client pydantic fastapi
           pip install transformers ctranslate2 sentencepiece
           pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
 
       - name: Deploy FastAPI app
-        run: cd ${{ github.ref_name }};modal run fastapi_app.py
+        run: cd ${{ github.ref_name }};modal serve fastapi_app.py
