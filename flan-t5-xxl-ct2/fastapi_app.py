@@ -16,7 +16,7 @@ translator = None
 tokenizer = None
 
 # image = Image.debian_slim()
-image = Image.from_dockerfile(
+image = Image.env({"HF_TOKEN": os.environ["HF_TOKEN"]}).from_dockerfile(
     "Dockerfile", context_mount=Mount.from_local_dir(".", remote_path="."))
 
 
@@ -72,7 +72,7 @@ def upload_model():
 @stub.function(image=image, secret=Secret.from_name("upload-model"))
 @asgi_app()
 def fastapi_app():
-    upload_model()
+    # upload_model()
     load_model()
     return web_app
 

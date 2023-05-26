@@ -10,6 +10,7 @@ jobs:
     env:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
     steps:
       - name: Checkout own repo
         uses: actions/checkout@v3
@@ -27,3 +28,6 @@ jobs:
 
       - name: Deploy FastAPI app
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
+
+      - name: Test FastAPI app
+        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.FLAN_T5_XXL_APP_URL }}"
