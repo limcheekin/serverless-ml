@@ -3,7 +3,7 @@ from typing import Optional
 from fastapi import FastAPI, Header
 from pydantic import BaseModel
 
-from modal import Image, Stub, asgi_app, web_endpoint
+from modal import Image, Stub, asgi_app, Mount
 
 from transformers import AutoTokenizer
 import ctranslate2
@@ -13,8 +13,9 @@ stub = Stub("flan-t5-xxl-ct2")
 translator = None
 tokenizer = None
 
-image = Image.copy_local_file('download_flan-t5-xxl.sh').copy_local_file(
-    'hf_upload_model.py').copy_local_file('README.md').from_dockerfile("Dockerfile")
+# image = Image.debian_slim()
+image = Image.from_dockerfile(
+    "Dockerfile", context_mount=Mount.from_local_dir(".", remote_path="."))
 
 
 class Response(BaseModel):
