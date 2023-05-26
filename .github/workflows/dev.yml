@@ -3,14 +3,13 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - flan-t5-xxl-ct2
+      - llama-cpp-python
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     env:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-      HF_TOKEN: ${{ secrets.HF_TOKEN }}
     steps:
       - name: Checkout own repo
         uses: actions/checkout@v3
@@ -22,12 +21,12 @@ jobs:
 
       - name: Install Python packages
         run: |
-          pip install modal-client pydantic fastapi
-          pip install transformers ctranslate2 sentencepiece
-          pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -U pip setuptools wheel
+          pip install modal-client
+          CMAKE_ARGS="-DLLAMA_OPENBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python[server]
 
       - name: Deploy FastAPI app
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
 
       - name: Test FastAPI app
-        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.FLAN_T5_XXL_APP_URL }}"
+        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.LLAMA_CPP_APP_URL }}v1/completions"
