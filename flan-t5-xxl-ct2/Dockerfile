@@ -1,6 +1,4 @@
-# REF: https://aws.amazon.com/blogs/machine-learning/using-container-images-to-run-pytorch-models-in-aws-lambda/
-# Build Stage
-FROM python:3.10-slim as build
+FROM python:3.10-slim
 
 # Install build dependencies
 RUN apt-get update && \
@@ -27,18 +25,3 @@ ARG HF_TOKEN
 ENV HF_TOKEN=$HF_TOKEN
 COPY hf_upload_model.py ./
 RUN python hf_upload_model.py
-
-# Runtime Stage
-FROM public.ecr.aws/lambda/python:3.10
-
-# Copy built files from the build stage
-RUN mkdir google
-COPY --from=build ./google ./google
-
-RUN pip install -U pip setuptools wheel && \
-    pip install --no-cache-dir transformers ctranslate2 sentencepiece && \
-    pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu && \
-    pip uninstall -y pip setuptools wheel
-
-COPY app.py ./
-CMD ["app.handler"]

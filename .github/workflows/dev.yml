@@ -6,31 +6,25 @@ on:
       - flan-t5-xxl-ct2
 jobs:
   deploy-dev:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
     steps:
-      - name: Setup docker
-        uses: docker-practice/actions-setup-docker@master
-        timeout-minutes: 12
-      - name: Test docker setup
-        run: |
-          set -x
-          docker version
-          docker run --rm hello-world
       - name: Checkout own repo
         uses: actions/checkout@v3
-      - name: Setup NodeJS 18
-        uses: actions/setup-node@v3
+
+      - name: Setup Python
+      - uses: actions/setup-python@v4
         with:
-          node-version: 18
-      - name: Install Serverless Framework
-        run: npm install -g serverless
-      - name: Serverless AWS authentication
-        run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
-      - name: Deploy Lambda functions
-        run: pwd;cd ${{ github.ref_name }};HF_TOKEN=${{ secrets.HF_TOKEN }} sls deploy
-      - name: Export Endpoint URL
-        run: pwd;cd ${{ github.ref_name }};echo $(HF_TOKEN= sls info --verbose | grep endpoint | sed s/endpoint\:\ //g | awk '{print $1}') > endpoint
-      - name: Echo Endpoint URL
-        run: pwd;cd ${{ github.ref_name }};echo $(cat endpoint)
-      - name: Test Lambda functions
-        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json $(cat endpoint)"
+          python-version: "3.10"
+
+      - name: Install Modal client package
+        run: |
+          pip install modal-client pydantic fastapi
+          pip install transformers ctranslate2 sentencepiece
+          pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: Deploy FastAPI app
+        run: cd ${{ github.ref_name }};modal run fastapi_app.py
