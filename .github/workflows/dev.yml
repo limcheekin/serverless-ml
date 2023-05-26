@@ -10,7 +10,6 @@ jobs:
     env:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-      HF_TOKEN: ${{ secrets.HF_TOKEN }}
     steps:
       - name: Checkout own repo
         uses: actions/checkout@v3
@@ -27,4 +26,4 @@ jobs:
           pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
 
       - name: Deploy FastAPI app
-        run: cd ${{ github.ref_name }};modal serve fastapi_app.py
+        run: cd ${{ github.ref_name }};modal app deploy fastapi_app.py

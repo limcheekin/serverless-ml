@@ -3,7 +3,7 @@ from typing import Optional
 from fastapi import FastAPI, Header
 from pydantic import BaseModel
 
-from modal import Image, Stub, asgi_app, Mount
+from modal import Image, Stub, asgi_app, Mount, Secret
 
 from transformers import AutoTokenizer
 import ctranslate2
@@ -69,7 +69,7 @@ def upload_model():
     )
 
 
-@stub.function(image=image)
+@stub.function(image=image, secret=Secret.from_name("upload-model"))
 @asgi_app()
 def fastapi_app():
     upload_model()
