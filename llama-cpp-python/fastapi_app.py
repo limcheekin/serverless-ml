@@ -4,7 +4,8 @@ from llama_cpp.server.app import create_app
 
 stub = Stub("llama-cpp-python")
 
-image = Image.from_dockerfile("Dockerfile")
+image = Image.from_dockerfile("Dockerfile").env(
+    {"MODEL": "./model/ggml-q4_0.bin"})
 
 
 @stub.function(image=image)
