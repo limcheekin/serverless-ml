@@ -1,10 +1,23 @@
 # Modal Lab web app for llama.cpp.
 from modal import Image, Stub, asgi_app
+from huggingface_hub import hf_hub_download
+import os
 
 stub = Stub("llama-cpp-python")
 
-image = Image.from_dockerfile("Dockerfile", force_build=True).env(
-    {"MODEL": "./model/ggml-q4_0.bin"})
+
+def download_model():
+    hf_hub_download(repo_id="vihangd/open_llama_7b_300bt_ggml",
+                    filename="ggml-model-q4_0.bin",
+                    local_dir="model")
+
+
+image = Image.debian_slim().env({
+    "MODEL": "./model/ggml-model-q4_0.bin",
+    "HF_TOKEN": os.environ["HF_TOKEN"],
+    "CMAKE_ARGS": "-DLLAMA_OPENBLAS=on",
+    "FORCE_CMAKE": 1
+}).pip_install("llama-cpp-python[server]", "huggingface_hub").run_function(download_model)
 
 
 @stub.function(image=image)
