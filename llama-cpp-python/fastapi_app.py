@@ -7,6 +7,7 @@ stub = Stub("llama-cpp-python")
 image = Image.from_dockerfile("Dockerfile")
 
 
+@stub.function(image=image)
 @asgi_app()
 def fastapi_app():
     return create_app()
