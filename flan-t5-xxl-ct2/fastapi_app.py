@@ -14,8 +14,9 @@ translator = None
 tokenizer = None
 
 # image = Image.debian_slim()
-image = Image.from_dockerfile("Dockerfile")
-
+image = Image.copy_local_file('download_flan-t5-xxl.sh')
+             .copy_local_file('hf_upload_model.py')
+             .from_dockerfile("Dockerfile")
 
 class Response(BaseModel):
     completion: str
@@ -35,10 +36,16 @@ async def handle_root(user_agent: Optional[str] = Header(None)):
 @web_app.post("/")
 async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     print(
-        f"POST /foo - received user_agent={user_agent}, item.name={item.name}"
+        f"POST / - received user_agent={user_agent}, request.prompt={request.prompt}"
     )
-    return item
-
+    input_tokens = tokenizer.convert_ids_to_tokens(
+            tokenizer.encode(request.prompt))
+    results = translator.translate_batch([input_tokens])
+    output_tokens = results[0].hypotheses[0]
+    result = tokenizer.decode(
+            tokenizer.convert_tokens_to_ids(output_tokens))
+    print(f"result: {result}")
+    return Response(completion=result) 
 
 def load_model():
     print('loading model...')
