@@ -26,4 +26,4 @@ jobs:
           pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
 
       - name: Deploy FastAPI app
-        run: cd ${{ github.ref_name }};modal app deploy fastapi_app.py
+        run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
