@@ -17,7 +17,7 @@ image = Image.debian_slim().env({
     "MODEL": "./model/ggml-model-q4_0.bin",
     "HF_TOKEN": os.environ["HF_TOKEN"],
     "CMAKE_ARGS": "-DLLAMA_OPENBLAS=on",
-    "FORCE_CMAKE": 1
+    "FORCE_CMAKE": "1"
 }).pip_install("llama-cpp-python[server]", "huggingface-hub").run_function(download_model)
 
 
