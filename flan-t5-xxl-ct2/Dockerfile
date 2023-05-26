@@ -20,8 +20,3 @@ RUN ct2-transformers-converter --model google/flan-t5-xxl --output_dir google/fl
     rm -rf google/flan-t5-xxl
 
 COPY README.md google/flan-t5-xxl-ct2/
-
-ARG HF_TOKEN
-ENV HF_TOKEN=$HF_TOKEN
-COPY hf_upload_model.py ./
-RUN python hf_upload_model.py

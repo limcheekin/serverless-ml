@@ -7,6 +7,8 @@ from modal import Image, Stub, asgi_app, Mount
 
 from transformers import AutoTokenizer
 import ctranslate2
+from huggingface_hub import HfApi, create_repo
+import os
 
 web_app = FastAPI()
 stub = Stub("flan-t5-xxl-ct2")
@@ -55,9 +57,22 @@ def load_model():
     print('model loaded\n')
 
 
+def upload_model():
+    create_repo("limcheekin/flan-t5-xxl-ct2",
+                token=os.environ["HF_TOKEN"],
+                repo_type="model",
+                exist_ok=True)
+    api = HfApi(token=os.environ["HF_TOKEN"])
+    api.upload_folder(
+        folder_path="google/flan-t5-xxl-ct2",
+        repo_id="limcheekin/flan-t5-xxl-ct2",
+    )
+
+
 @stub.function(image=image)
 @asgi_app()
 def fastapi_app():
+    upload_model()
     load_model()
     return web_app
 
