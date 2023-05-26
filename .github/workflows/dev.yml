@@ -20,10 +20,7 @@ jobs:
           python-version: "3.10"
 
       - name: Install Python packages
-        run: |
-          pip install -U pip setuptools wheel
-          pip install modal-client
-          CMAKE_ARGS="-DLLAMA_OPENBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python[server]
+        run: pip install modal-client
 
       - name: Deploy FastAPI app
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
