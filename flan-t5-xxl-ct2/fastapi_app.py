@@ -14,7 +14,7 @@ translator = None
 tokenizer = None
 
 image = Image.copy_local_file('download_flan-t5-xxl.sh').copy_local_file(
-    'hf_upload_model.py').from_dockerfile("Dockerfile")
+    'hf_upload_model.py').copy_local_file('README.md').from_dockerfile("Dockerfile")
 
 
 class Response(BaseModel):
