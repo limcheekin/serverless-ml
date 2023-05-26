@@ -6,10 +6,12 @@
 # Grab a fresh copy of the Python image
 FROM python:3.10-slim-bullseye
 
-# Install runtime dependencies
+# Install build and runtime dependencies
 RUN apt-get update && \
     apt-get install -y \
     libopenblas-dev \
+    ninja-build \
+    build-essential \
     curl
 
 RUN pip install -U pip setuptools wheel && \
