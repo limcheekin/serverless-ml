@@ -28,7 +28,7 @@ jobs:
           pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
 
       - name: Deploy FastAPI app
-        run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
+        run: cd ${{ github.ref_name }};TEST_TOKEN=XYZ modal deploy fastapi_app.py
 
       - name: Test FastAPI app
         run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.FLAN_T5_XXL_APP_URL }}"
