@@ -18,7 +18,7 @@ tokenizer = None
 # image = Image.debian_slim()
 print('os.environ["TEST_TOKEN"]', os.environ["TEST_TOKEN"])
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(".", remote_path=".")).env(
-    {"HF_TOKEN": os.environ["HF_TOKEN"], "TEST_TOKEN": os.environ["TEST_TOKEN"]})
+    {"HF_TOKEN": os.environ["HF_TOKEN"], "TEST_TOKEN": os.environ["TEST_TOKEN"]}).run_function(upload_model)
 
 
 class Response(BaseModel):
@@ -59,6 +59,7 @@ def load_model():
 
 
 def upload_model():
+    print("os.environ[TEST_TOKEN]", os.environ["TEST_TOKEN"])
     create_repo("limcheekin/flan-t5-xxl-ct2",
                 token=os.environ["HF_TOKEN"],
                 repo_type="model",

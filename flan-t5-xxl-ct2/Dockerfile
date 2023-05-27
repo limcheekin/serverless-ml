@@ -20,6 +20,6 @@ RUN ct2-transformers-converter --model google/flan-t5-xxl --output_dir google/fl
 
 COPY README.md google/flan-t5-xxl-ct2/
 
-COPY hf_upload_model.py ./
+#COPY hf_upload_model.py ./
 RUN echo "Docker $TEST_TOKEN"
-RUN python hf_upload_model.py
+#RUN python hf_upload_model.py
