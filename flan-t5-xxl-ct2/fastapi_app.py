@@ -16,8 +16,12 @@ translator = None
 tokenizer = None
 
 # image = Image.debian_slim()
-image = Image.from_dockerfile(
-    "Dockerfile", context_mount=Mount.from_local_dir(".", remote_path=".")).env({"HF_TOKEN": os.environ["HF_TOKEN"]})
+print('os.environ["TEST_TOKEN"]', os.environ["TEST_TOKEN"])
+image = Image.env({
+    "HF_TOKEN": os.environ["HF_TOKEN"],
+    "TEST_TOKEN": os.environ["TEST_TOKEN"]
+}).from_dockerfile(
+    "Dockerfile", context_mount=Mount.from_local_dir(".", remote_path="."))
 
 
 class Response(BaseModel):

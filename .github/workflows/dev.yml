@@ -11,6 +11,7 @@ jobs:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
       HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      TEST_TOKEN: XYZ
     steps:
       - name: Checkout own repo
         uses: actions/checkout@v3
