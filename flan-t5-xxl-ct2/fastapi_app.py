@@ -18,21 +18,23 @@ tokenizer = None
 
 def upload_model():
     print("os.environ[TEST_TOKEN]", os.environ["TEST_TOKEN"])
-    create_repo("limcheekin/flan-t5-xxl-ct2",
-                token=os.environ["HF_TOKEN"],
-                repo_type="model",
-                exist_ok=True)
-    api = HfApi(token=os.environ["HF_TOKEN"])
-    api.upload_folder(
-        folder_path="google/flan-t5-xxl-ct2",
-        repo_id="limcheekin/flan-t5-xxl-ct2",
-    )
+    # create_repo("limcheekin/flan-t5-xxl-ct2",
+    #            token=os.environ["HF_TOKEN"],
+    #            repo_type="model",
+    #            exist_ok=True)
+    # api = HfApi(token=os.environ["HF_TOKEN"])
+    # api.upload_folder(
+    #    folder_path="google/flan-t5-xxl-ct2",
+    #    repo_id="limcheekin/flan-t5-xxl-ct2",
+    # )
 
 
 # image = Image.debian_slim()
 print('os.environ["TEST_TOKEN"]', os.environ["TEST_TOKEN"])
-image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(".", remote_path=".")).env(
-    {"HF_TOKEN": os.environ["HF_TOKEN"], "TEST_TOKEN": os.environ["TEST_TOKEN"]}).run_function(upload_model)
+image = (
+    Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(".", remote_path=".")).env(
+        {"HF_TOKEN": os.environ["HF_TOKEN"], "TEST_TOKEN": os.environ["TEST_TOKEN"]}).run_function(upload_model)
+)
 
 
 class Response(BaseModel):

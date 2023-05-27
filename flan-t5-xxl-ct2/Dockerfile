@@ -4,9 +4,9 @@ FROM python:3.10-slim
 RUN apt-get update && \
     apt-get install -y git-lfs
 
-RUN pip install -U pip setuptools wheel && \
-    pip install --no-cache-dir transformers ctranslate2 sentencepiece accelerate && \
-    pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu
+#RUN pip install -U pip setuptools wheel && \
+#    pip install --no-cache-dir transformers ctranslate2 sentencepiece accelerate && \
+#    pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu
 
 RUN echo "Docker $TEST_TOKEN"
 # Download and prepare model
