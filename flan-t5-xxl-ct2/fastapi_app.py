@@ -17,10 +17,7 @@ tokenizer = None
 
 # image = Image.debian_slim()
 print('os.environ["TEST_TOKEN"]', os.environ["TEST_TOKEN"])
-image = Image.env({
-    "HF_TOKEN": os.environ["HF_TOKEN"],
-    "TEST_TOKEN": os.environ["TEST_TOKEN"]
-}).from_dockerfile(
+image = Image.env({"HF_TOKEN": os.environ["HF_TOKEN"], "TEST_TOKEN": os.environ["TEST_TOKEN"]}).from_dockerfile(
     "Dockerfile", context_mount=Mount.from_local_dir(".", remote_path="."))
 
 
