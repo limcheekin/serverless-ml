@@ -51,8 +51,8 @@ async def handle(request: Request, user_agent: Optional[str] = Header(None)):
 
 def load_model():
     print('loading model...')
-    translator = ctranslate2.Translator("google/flan-t5-xxl-ct2")
-    tokenizer = AutoTokenizer.from_pretrained("google/flan-t5-xxl-ct2")
+    translator = ctranslate2.Translator("/google/flan-t5-xxl-ct2")
+    tokenizer = AutoTokenizer.from_pretrained("/google/flan-t5-xxl-ct2")
     print('model loaded\n')
 
 
