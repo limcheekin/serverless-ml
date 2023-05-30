@@ -9,9 +9,9 @@ tags:
   - int8
 ---
 
-# Model Card for FLAN T5 XXL Q8
+# Model Card for InstructCodeT5+ 16B Q8
 
-The model is quantized version of the [google/flan-t5-xxl](https://huggingface.co/google/flan-t5-xxl) with int8 quantization.
+The model is quantized version of the [Salesforce/instructcodet5p-16b](https://huggingface.co/Salesforce/instructcodet5p-16b) with int8 quantization.
 
 ## Model Details
 
@@ -20,7 +20,7 @@ The model is quantized version of the [google/flan-t5-xxl](https://huggingface.c
 The model being quantized using [CTranslate2](https://opennmt.net/CTranslate2/) with the following command:
 
 ```
-ct2-transformers-converter --model google/flan-t5-xxl --output_dir google/flan-t5-xxl-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json spiece.model --quantization int8 --force --low_cpu_mem_usage
+ct2-transformers-converter --model Salesforce/instructcodet5p-16b --output_dir Salesforce/instructcodet5p-16b-ct2 --copy_files added_tokens.json merges.txt tokenizer.json tokenizer_config.json special_tokens_map.json vocab.json --quantization int8 --force --low_cpu_mem_usage
 ```
 
 If you want to perform the quantization yourself, you need to install the following dependencies:
@@ -40,10 +40,10 @@ Use the code below to get started with the model.
 import ctranslate2
 import transformers
 
-translator = ctranslate2.Translator("google/flan-t5-xxl-ct2")
-tokenizer = transformers.AutoTokenizer.from_pretrained("google/flan-t5-xxl-ct2")
+translator = ctranslate2.Translator("limcheekin/instructcodet5p-16b-ct2")
+tokenizer = transformers.AutoTokenizer.from_pretrained("limcheekin/instructcodet5p-16b-ct2")
 
-input_text = "translate English to German: The house is wonderful."
+input_text = "def print_hello_world():"
 input_tokens = tokenizer.convert_ids_to_tokens(tokenizer.encode(input_text))
 
 results = translator.translate_batch([input_tokens])

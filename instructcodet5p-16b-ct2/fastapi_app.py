@@ -10,7 +10,7 @@ import ctranslate2
 import os
 
 web_app = FastAPI()
-stub = Stub("flan-t5-xxl-ct2")
+stub = Stub("instructcodet5p-16b-ct2")
 translator = None
 tokenizer = None
 
@@ -49,17 +49,18 @@ async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     return Response(completion=result)
 
 
-def load_model():
+@web_app.on_event('startup')
+def init():
     print('loading model...')
-    translator = ctranslate2.Translator("/google/flan-t5-xxl-ct2")
-    tokenizer = AutoTokenizer.from_pretrained("/google/flan-t5-xxl-ct2")
+    translator = ctranslate2.Translator("/Salesforce/instructcodet5p-16b-ct2")
+    tokenizer = AutoTokenizer.from_pretrained(
+        "/Salesforce/instructcodet5p-16b-ct2")
     print('model loaded\n')
 
 
 @stub.function(image=image)
 @asgi_app()
 def fastapi_app():
-    load_model()
     return web_app
 
 

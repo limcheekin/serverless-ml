@@ -61,4 +61,4 @@ workflows:
           filters:
             branches:
               only:
-                - flan-t5-xxl-ct2
+                - instructcodet5p-16b-ct2
