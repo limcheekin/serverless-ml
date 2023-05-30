@@ -3,7 +3,7 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - instructcodet5p-16b-ct2
+      - codet5p-2b-ct2
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest

@@ -61,4 +61,4 @@ workflows:
           filters:
             branches:
               only:
-                - instructcodet5p-16b-ct2
+                - codet5p-2b-ct2

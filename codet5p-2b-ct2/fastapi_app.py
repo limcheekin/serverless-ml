@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from modal import Image, Stub, asgi_app, Mount
 
 web_app = FastAPI()
-stub = Stub("instructcodet5p-16b-ct2")
+stub = Stub("codet5p-2b-ct2")
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
     ".", remote_path="."))
 stub.image = image
@@ -15,9 +15,9 @@ if stub.is_inside(stub.image):
     from transformers import AutoTokenizer
     import ctranslate2
     print('loading model...')
-    translator = ctranslate2.Translator("/Salesforce/instructcodet5p-16b-ct2")
+    translator = ctranslate2.Translator("/Salesforce/codet5p-2b-ct2")
     tokenizer = AutoTokenizer.from_pretrained(
-        "/Salesforce/instructcodet5p-16b-ct2")
+        "/Salesforce/codet5p-2b-ct2")
     print('model loaded\n')
 
 

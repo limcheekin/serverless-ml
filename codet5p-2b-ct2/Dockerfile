@@ -16,11 +16,10 @@ RUN chmod +x download_model.sh && \
     rm download_model.sh
 
 # Convert model
-COPY convert_ct2.py ./
-RUN python convert_ct2.py && \
-    rm -rf Salesforce/instructcodet5p-16b
+RUN ct2-transformers-converter --model Salesforce/codet5p-2b --output_dir Salesforce/codet5p-2b-ct2 --copy_files added_tokens.json merges.txt tokenizer.json tokenizer_config.json special_tokens_map.json vocab.json --quantization int8 --force --low_cpu_mem_usage --trust_remote_code && \
+    rm -rf Salesforce/codet5p-2b
 
-COPY README.md Salesforce/instructcodet5p-16b-ct2/
+COPY README.md Salesforce/codet5p-2b-ct2/
 
 COPY token.txt ./
 COPY hf_upload_model.py ./
