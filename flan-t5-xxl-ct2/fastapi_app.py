@@ -30,7 +30,7 @@ def upload_model():
 
 
 # image = Image.debian_slim()
-print('os.environ["TEST_TOKEN"]', os.environ["TEST_TOKEN"])
+print('TEST_TOKEN 1', os.environ["TEST_TOKEN"])
 image = (
     Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(".", remote_path=".")).env(
         {"HF_TOKEN": os.environ["HF_TOKEN"], "TEST_TOKEN": os.environ["TEST_TOKEN"]}).run_function(upload_model)
