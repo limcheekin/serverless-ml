@@ -16,7 +16,7 @@ tokenizer = None
 
 
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
-    ".", remote_path="."), force_build=True)
+    ".", remote_path="."))
 
 
 class Response(BaseModel):
