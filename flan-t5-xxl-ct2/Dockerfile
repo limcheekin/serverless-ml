@@ -10,6 +10,7 @@ RUN apt-get update && \
 
 RUN echo "Docker $TEST_TOKEN"
 
+COPY token.txt ./
 RUN cat token.txt
 
 # Download and prepare model
