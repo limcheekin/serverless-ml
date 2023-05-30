@@ -3,11 +3,10 @@ from typing import Optional
 from fastapi import FastAPI, Header
 from pydantic import BaseModel
 
-from modal import Image, Stub, asgi_app, Mount, Secret
+from modal import Image, Stub, asgi_app, Mount
 
 from transformers import AutoTokenizer
 import ctranslate2
-from huggingface_hub import HfApi, create_repo
 import os
 
 web_app = FastAPI()
@@ -16,25 +15,8 @@ translator = None
 tokenizer = None
 
 
-def upload_model():
-    print("os.environ[TEST_TOKEN]", os.environ["TEST_TOKEN"])
-    # create_repo("limcheekin/flan-t5-xxl-ct2",
-    #            token=os.environ["HF_TOKEN"],
-    #            repo_type="model",
-    #            exist_ok=True)
-    # api = HfApi(token=os.environ["HF_TOKEN"])
-    # api.upload_folder(
-    #    folder_path="google/flan-t5-xxl-ct2",
-    #    repo_id="limcheekin/flan-t5-xxl-ct2",
-    # )
-
-
-# image = Image.debian_slim()
-print('TEST_TOKEN 1', os.environ["TEST_TOKEN"])
-image = (
-    Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(".", remote_path="."), force_build=True).env(
-        {"HF_TOKEN": os.environ["HF_TOKEN"], "TEST_TOKEN": os.environ["TEST_TOKEN"]}).run_function(upload_model)
-)
+image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
+    ".", remote_path="."), force_build=True)
 
 
 class Response(BaseModel):
@@ -74,10 +56,9 @@ def load_model():
     print('model loaded\n')
 
 
-@stub.function(image=image, secret=Secret.from_name("upload-model"))
+@stub.function(image=image)
 @asgi_app()
 def fastapi_app():
-    # upload_model()
     load_model()
     return web_app
 

@@ -4,28 +4,23 @@ FROM python:3.10-slim
 RUN apt-get update && \
     apt-get install -y git-lfs
 
-#RUN pip install -U pip setuptools wheel && \
-#    pip install --no-cache-dir transformers ctranslate2 sentencepiece accelerate && \
-#    pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu
+RUN pip install -U pip setuptools wheel && \
+    pip install --no-cache-dir transformers ctranslate2 sentencepiece accelerate && \
+    pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu
 
-RUN echo "Docker $TEST_TOKEN"
-
-COPY token.txt ./
-RUN cat token.txt
 
 # Download and prepare model
-#COPY download_flan-t5-xxl.sh .
-#RUN chmod +x download_flan-t5-xxl.sh && \
-#    ./download_flan-t5-xxl.sh && \
-#    rm download_flan-t5-xxl.sh
+COPY download_flan-t5-xxl.sh .
+RUN chmod +x download_flan-t5-xxl.sh && \
+    ./download_flan-t5-xxl.sh && \
+    rm download_flan-t5-xxl.sh
 
 # Convert model
-#RUN ct2-transformers-converter --model google/flan-t5-xxl --output_dir google/flan-t5-xxl-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json spiece.model --quantization int8 --force --low_cpu_mem_usage && \
-#    rm -rf google/flan-t5-xxl
+RUN ct2-transformers-converter --model google/flan-t5-xxl --output_dir google/flan-t5-xxl-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json spiece.model --quantization int8 --force --low_cpu_mem_usage && \
+    rm -rf google/flan-t5-xxl
 
-RUN pwd;mkdir -p google/flan-t5-xxl-ct2
 COPY README.md google/flan-t5-xxl-ct2/
 
-#COPY hf_upload_model.py ./
-#RUN echo "Docker $TEST_TOKEN"
-#RUN python hf_upload_model.py
+COPY token.txt ./
+COPY hf_upload_model.py ./
+RUN python hf_upload_model.py
