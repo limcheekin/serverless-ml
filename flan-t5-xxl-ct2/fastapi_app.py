@@ -4,19 +4,21 @@ from fastapi import FastAPI, Header
 from pydantic import BaseModel
 
 from modal import Image, Stub, asgi_app, Mount
-
-from transformers import AutoTokenizer
-import ctranslate2
 import os
 
 web_app = FastAPI()
 stub = Stub("flan-t5-xxl-ct2")
-translator = None
-tokenizer = None
-
 
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
     ".", remote_path="."))
+
+if stub.is_inside(image):
+    from transformers import AutoTokenizer
+    import ctranslate2
+    print('loading model...')
+    translator = ctranslate2.Translator("/google/flan-t5-xxl-ct2")
+    tokenizer = AutoTokenizer.from_pretrained("/google/flan-t5-xxl-ct2")
+    print('model loaded\n')
 
 
 class Response(BaseModel):
@@ -47,14 +49,6 @@ async def handle(request: Request, user_agent: Optional[str] = Header(None)):
         tokenizer.convert_tokens_to_ids(output_tokens))
     print(f"result: {result}")
     return Response(completion=result)
-
-
-@web_app.on_event('startup')
-def init():
-    print('loading model...')
-    translator = ctranslate2.Translator("/google/flan-t5-xxl-ct2")
-    tokenizer = AutoTokenizer.from_pretrained("/google/flan-t5-xxl-ct2")
-    print('model loaded\n')
 
 
 @stub.function(image=image)
