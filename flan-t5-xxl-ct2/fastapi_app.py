@@ -4,15 +4,14 @@ from fastapi import FastAPI, Header
 from pydantic import BaseModel
 
 from modal import Image, Stub, asgi_app, Mount
-import os
 
 web_app = FastAPI()
 stub = Stub("flan-t5-xxl-ct2")
-
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
     ".", remote_path="."))
+stub.image = image
 
-if stub.is_inside(image):
+if stub.is_inside(stub.image):
     from transformers import AutoTokenizer
     import ctranslate2
     print('loading model...')
