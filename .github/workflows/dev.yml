@@ -23,8 +23,6 @@ jobs:
       - name: Install Python packages
         run: |
           pip install modal-client pydantic fastapi
-          pip install transformers ctranslate2 sentencepiece
-          pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
 
       - name: Create token.txt
         run: cd ${{ github.ref_name }};echo "${{ secrets.HF_TOKEN }}" > token.txt
