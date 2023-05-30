@@ -12,11 +12,13 @@ RUN apt-get update && \
     libopenblas-dev \
     ninja-build \
     build-essential \
-    curl
+    git-lfs
 
 RUN pip install -U pip setuptools wheel && \
     CMAKE_ARGS="-DLLAMA_OPENBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python[server]
 
-# download the model file
-RUN mkdir model
-RUN curl -L https://huggingface.co/vihangd/open_llama_7b_300bt_ggml/resolve/main/ggml-model-q4_0.bin -o model/ggml-q4_0.bin
+# Download and prepare model
+COPY download_model.sh .
+RUN chmod +x download_model.sh && \
+    ./download_model.sh && \
+    rm download_model.sh
