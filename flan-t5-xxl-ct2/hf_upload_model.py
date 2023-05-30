@@ -2,7 +2,7 @@ from huggingface_hub import HfApi, create_repo
 import os
 
 with open('token.txt', 'r') as f:
-    token = f.read()
+    token = f.read().rstrip("\n")
 
 create_repo("limcheekin/flan-t5-xxl-ct2",
             token=token,
