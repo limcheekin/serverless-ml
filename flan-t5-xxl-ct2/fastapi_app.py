@@ -49,7 +49,8 @@ async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     return Response(completion=result)
 
 
-def load_model():
+@web_app.on_event('startup')
+def init():
     print('loading model...')
     translator = ctranslate2.Translator("/google/flan-t5-xxl-ct2")
     tokenizer = AutoTokenizer.from_pretrained("/google/flan-t5-xxl-ct2")
@@ -59,7 +60,6 @@ def load_model():
 @stub.function(image=image)
 @asgi_app()
 def fastapi_app():
-    load_model()
     return web_app
 
 
