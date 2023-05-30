@@ -16,7 +16,7 @@ RUN chmod +x download_model.sh && \
     rm download_model.sh
 
 # Convert model
-RUN ct2-transformers-converter --model Salesforce/instructcodet5p-16b --output_dir Salesforce/instructcodet5p-16b-ct2 --copy_files added_tokens.json merges.txt tokenizer.json tokenizer_config.json special_tokens_map.json vocab.json --quantization int8 --force --low_cpu_mem_usage && \
+RUN ct2-transformers-converter --model /Salesforce/instructcodet5p-16b --output_dir Salesforce/instructcodet5p-16b-ct2 --copy_files added_tokens.json merges.txt tokenizer.json tokenizer_config.json special_tokens_map.json vocab.json --quantization int8 --force --low_cpu_mem_usage && \
     rm -rf Salesforce/instructcodet5p-16b
 
 COPY README.md Salesforce/instructcodet5p-16b-ct2/
