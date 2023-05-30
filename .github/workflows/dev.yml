@@ -10,8 +10,7 @@ jobs:
     env:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-      HF_TOKEN: ${{ secrets.HF_TOKEN }}
-      TEST_TOKEN: XYZ
+
     steps:
       - name: Checkout own repo
         uses: actions/checkout@v3
@@ -26,6 +25,9 @@ jobs:
           pip install modal-client pydantic fastapi
           pip install transformers ctranslate2 sentencepiece
           pip install torch --extra-index-url https://download.pytorch.org/whl/cpu
+
+      - name: Create token.txt
+        run: cd ${{ github.ref_name }};echo "${{ secrets.HF_TOKEN }}" > token.txt
 
       - name: Deploy FastAPI app
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
