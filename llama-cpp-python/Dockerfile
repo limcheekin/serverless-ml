@@ -17,8 +17,6 @@ RUN apt-get update && \
 RUN pip install -U pip setuptools wheel && \
     CMAKE_ARGS="-DLLAMA_OPENBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python[server]
 
-# Download and prepare model
-COPY download_model.sh .
-RUN chmod +x download_model.sh && \
-    ./download_model.sh && \
-    rm download_model.sh
+# Download model
+RUN mkdir model && \
+    curl -L https://huggingface.co/SlyEcho/open_llama_3b_ggml/resolve/main/open-llama-3b-q4-0.bin -o model/ggml-model-q4_0.bin
