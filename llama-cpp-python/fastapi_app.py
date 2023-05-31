@@ -4,7 +4,7 @@ from modal import Image, Stub, asgi_app
 stub = Stub("llama-cpp-python")
 
 image = Image.from_dockerfile("Dockerfile", force_build=True).env(
-    {"MODEL": "./model/ggml-model-q4_0.bin"})
+    {"MODEL": "/model/ggml-model-q4_0.bin"})
 
 
 @stub.function(image=image)
