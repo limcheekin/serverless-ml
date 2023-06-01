@@ -61,4 +61,4 @@ workflows:
           filters:
             branches:
               only:
-                - fastchat-t5-3b-ct2
+                - flan-alpaca-gpt4-xl-ct2

@@ -4,14 +4,14 @@ language:
   - en
 tags:
   - ctranslate2
-  - fastchat-t5-3b
+  - flan-alpaca-gpt4-xl
   - quantization
   - int8
 ---
 
-# Model Card for FastChat-T5 3B Q8
+# Model Card for Flan-Alpaca-GPT4-XL Q8
 
-The model is quantized version of the [lmsys/fastchat-t5-3b-v1.0](https://huggingface.co/lmsys/fastchat-t5-3b-v1.0) with int8 quantization.
+The model is quantized version of the [declare-lab/flan-alpaca-gpt4-xl](https://huggingface.co/declare-lab/flan-alpaca-gpt4-xl) with int8 quantization.
 
 ## Model Details
 
@@ -20,7 +20,7 @@ The model is quantized version of the [lmsys/fastchat-t5-3b-v1.0](https://huggin
 The model being quantized using [CTranslate2](https://opennmt.net/CTranslate2/) with the following command:
 
 ```
-ct2-transformers-converter --model lmsys/fastchat-t5-3b --output_dir lmsys/fastchat-t5-3b-ct2 --copy_files added_tokens.json tokenizer_config.json special_tokens_map.json spiece.model --quantization int8 --force --low_cpu_mem_usage
+ct2-transformers-converter --model declare-lab/flan-alpaca-gpt4-xl --output_dir declare-lab/flan-alpaca-gpt4-xl-ct2 --copy_files generation_config.json tokenizer.json tokenizer_config.json special_tokens_map.json spiece.model --quantization int8 --force --low_cpu_mem_usage
 ```
 
 If you want to perform the quantization yourself, you need to install the following dependencies:
@@ -40,8 +40,8 @@ Use the code below to get started with the model.
 import ctranslate2
 import transformers
 
-translator = ctranslate2.Translator("limcheekin/fastchat-t5-3b-ct2")
-tokenizer = transformers.AutoTokenizer.from_pretrained("limcheekin/fastchat-t5-3b-ct2")
+translator = ctranslate2.Translator("limcheekin/flan-alpaca-gpt4-xl-ct2")
+tokenizer = transformers.AutoTokenizer.from_pretrained("limcheekin/flan-alpaca-gpt4-xl-ct2")
 
 input_text = "translate English to German: The house is wonderful."
 input_tokens = tokenizer.convert_ids_to_tokens(tokenizer.encode(input_text))

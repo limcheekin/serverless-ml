@@ -3,7 +3,7 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - fastchat-t5-3b-ct2
+      - flan-alpaca-gpt4-xl-ct2
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
@@ -31,4 +31,4 @@ jobs:
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
 
       - name: Test FastAPI app
-        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.FLAN_T5_XXL_APP_URL }}"
+        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.FLAN_ALPACA_GPT4_XL_APP_URL }}"

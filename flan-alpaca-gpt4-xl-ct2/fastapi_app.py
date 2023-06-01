@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from modal import Image, Stub, asgi_app, Mount
 
 web_app = FastAPI()
-stub = Stub("fastchat-t5-3b-ct2")
+stub = Stub("flan-alpaca-gpt4-xl-ct2")
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
     ".", remote_path="."))
 stub.image = image
@@ -15,8 +15,9 @@ if stub.is_inside(stub.image):
     from transformers import AutoTokenizer
     import ctranslate2
     print('loading model...')
-    translator = ctranslate2.Translator("/lmsys/fastchat-t5-3b-ct2")
-    tokenizer = AutoTokenizer.from_pretrained("/lmsys/fastchat-t5-3b-ct2")
+    translator = ctranslate2.Translator("/declare-lab/flan-alpaca-gpt4-xl-ct2")
+    tokenizer = AutoTokenizer.from_pretrained(
+        "/declare-lab/flan-alpaca-gpt4-xl-ct2")
     print('model loaded\n')
 
 
