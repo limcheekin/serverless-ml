@@ -26,7 +26,7 @@ ct2-transformers-converter --model mosaicml/mpt-7b-storywriter --output_dir mosa
 If you want to perform the quantization yourself, you need to install the following dependencies:
 
 ```
-pip install -qU ctranslate2 transformers[torch] accelerate
+pip install -qU ctranslate2 transformers[torch] accelerate einops
 ```
 
 - **Shared by:** Lim Chee Kin
