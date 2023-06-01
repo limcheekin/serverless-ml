@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from modal import Image, Stub, asgi_app, Mount
 
 web_app = FastAPI()
-stub = Stub("flan-alpaca-gpt4-xl-ct2")
+stub = Stub("mpt-7b-storywriter-ct2")
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
     ".", remote_path="."))
 stub.image = image
@@ -15,10 +15,9 @@ if stub.is_inside(stub.image):
     from transformers import AutoTokenizer
     import ctranslate2
     print('loading model...')
-    translator = ctranslate2.Translator("/declare-lab/flan-alpaca-gpt4-xl-ct2")
-    tokenizer = AutoTokenizer.from_pretrained(
-        "/declare-lab/flan-alpaca-gpt4-xl-ct2")
-    print('model loaded\n')
+    generator = ctranslate2.Generator("/mosaicml/mpt-7b-storywriter-ct2")
+    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neox-20b")
+    print('model loaded.')
 
 
 class Response(BaseModel):
@@ -43,12 +42,11 @@ async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     )
     input_tokens = tokenizer.convert_ids_to_tokens(
         tokenizer.encode(request.prompt))
-    results = translator.translate_batch([input_tokens])
-    output_tokens = results[0].hypotheses[0]
-    result = tokenizer.decode(
-        tokenizer.convert_tokens_to_ids(output_tokens))
-    print(f"result: {result}")
-    return Response(completion=result)
+    results = generator.generate_batch(
+        [input_tokens], max_length=256, sampling_topk=10)
+    text = tokenizer.decode(results[0].sequences_ids[0])
+    print(f"text: {text}")
+    return Response(completion=text)
 
 
 @stub.function(image=image)

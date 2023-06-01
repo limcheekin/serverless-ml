@@ -61,4 +61,4 @@ workflows:
           filters:
             branches:
               only:
-                - flan-alpaca-gpt4-xl-ct2
+                - mpt-7b-storywriter-ct2
