@@ -8,7 +8,7 @@ from modal import Image, Stub, asgi_app, Mount
 web_app = FastAPI()
 stub = Stub("mpt-7b-storywriter-ct2")
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
-    ".", remote_path="."))
+    ".", remote_path="."), force_build=True)
 stub.image = image
 
 if stub.is_inside(stub.image):
