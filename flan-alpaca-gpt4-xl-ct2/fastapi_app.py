@@ -4,30 +4,44 @@ from fastapi import FastAPI, Header
 from pydantic import BaseModel
 
 from modal import Image, Stub, asgi_app, Mount
+import os
+import copy
 
+model_name = os.environ["MODEL"]
+index = model_name.rindex("/") + 1
+stub_name = model_name[index:]
 web_app = FastAPI()
-stub = Stub("flan-alpaca-gpt4-xl-ct2")
+stub = Stub(stub_name)
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
-    ".", remote_path="."))
+    ".", remote_path="."), force_build=True).env({"MODEL": model_name})
 stub.image = image
 
 if stub.is_inside(stub.image):
     from transformers import AutoTokenizer
     import ctranslate2
-    print('loading model...')
-    translator = ctranslate2.Translator("/declare-lab/flan-alpaca-gpt4-xl-ct2")
-    tokenizer = AutoTokenizer.from_pretrained(
-        "/declare-lab/flan-alpaca-gpt4-xl-ct2")
+    import os
+    print(f"loading {os.environ['MODEL']} model...")
+    translator = ctranslate2.Translator(os.environ["MODEL"])
+    tokenizer = AutoTokenizer.from_pretrained(os.environ["MODEL"])
     print('model loaded\n')
+    default_params: dict = {
+        "beam_size": 2,
+        "top_k": 1,              # sampling_topk
+        "temperature": 1.0,      # sampling_temperature
+        "repeat_penalty": 1.0,   # repetition_penalty
+        "no_repeat_ngram_size": 0,
+        "min_length": 1,         # min_decoding_length
+        "max_length": 256,       # max_decoding_length
+    }
 
 
 class Response(BaseModel):
-    completion: str
+    prompt: str
 
 
 class Request(BaseModel):
     prompt: str
-    params: Optional[dict] = None
+    params: Optional[dict] = {}
 
 
 @web_app.get("/")
@@ -39,16 +53,28 @@ async def handle_root(user_agent: Optional[str] = Header(None)):
 @web_app.post("/")
 async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     print(
-        f"POST / - received user_agent={user_agent}, request.prompt={request.prompt}"
+        f"POST / - received user_agent={user_agent}, request.prompt={request.prompt}, request.params={request.params}"
     )
+    params = copy.deepcopy(default_params)
+    params.update(request.params)
+    print("params", params)
     input_tokens = tokenizer.convert_ids_to_tokens(
         tokenizer.encode(request.prompt))
-    results = translator.translate_batch([input_tokens])
+    results = translator.translate_batch(
+        [input_tokens],
+        beam_size=params["beam_size"],
+        sampling_topk=params["top_k"],
+        sampling_temperature=params["temperature"],
+        repetition_penalty=params["repeat_penalty"],
+        no_repeat_ngram_size=params["no_repeat_ngram_size"],
+        min_decoding_length=params["min_length"],
+        max_decoding_length=params["max_length"],
+    )
     output_tokens = results[0].hypotheses[0]
     result = tokenizer.decode(
         tokenizer.convert_tokens_to_ids(output_tokens))
     print(f"result: {result}")
-    return Response(completion=result)
+    return Response(prompt=result)
 
 
 @stub.function(image=image)
