@@ -14,6 +14,6 @@ curl https://huggingface.co/EleutherAI/gpt-neox-20b/resolve/main/vocab.json -o /
 curl https://huggingface.co/EleutherAI/gpt-neox-20b/resolve/main/merges.txt -o /EleutherAI/gpt-neox-20b/merges.txt
 curl https://huggingface.co/EleutherAI/gpt-neox-20b/resolve/main/tokenizer.json -o /EleutherAI/gpt-neox-20b/tokenizer.json
 curl https://huggingface.co/EleutherAI/gpt-neox-20b/resolve/main/special_tokens_map.json -o /EleutherAI/gpt-neox-20b/special_tokens_map.json
-cd EleutherAI/gpt-neox-20b
+cd /EleutherAI/gpt-neox-20b
 pwd
 ls -l
