@@ -40,6 +40,7 @@ jobs:
 
 workflows:
   deploy-dev:
+    when: false
     jobs:
       - deploy-dev:
           filters:
