@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 from modal import Image, Stub, asgi_app, Mount
 import os
+import copy
 
 model_name = os.environ["MODEL"]
 index = model_name.rindex("/") + 1
@@ -23,15 +24,7 @@ if stub.is_inside(stub.image):
     translator = ctranslate2.Translator(os.environ["MODEL"])
     tokenizer = AutoTokenizer.from_pretrained(os.environ["MODEL"])
     print('model loaded\n')
-
-
-class Response(BaseModel):
-    prompt: str
-
-
-class Request(BaseModel):
-    prompt: str
-    params: Optional[dict] = {
+    default_params: dict = {
         "beam_size": 2,
         "top_k": 1,              # sampling_topk
         "temperature": 1.0,      # sampling_temperature
@@ -40,6 +33,15 @@ class Request(BaseModel):
         "min_length": 1,         # min_decoding_length
         "max_length": 256,       # max_decoding_length
     }
+
+
+class Response(BaseModel):
+    prompt: str
+
+
+class Request(BaseModel):
+    prompt: str
+    params: Optional[dict] = {}
 
 
 @web_app.get("/")
@@ -53,17 +55,19 @@ async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     print(
         f"POST / - received user_agent={user_agent}, request.prompt={request.prompt}, request.params={request.params}"
     )
+    params = copy.deepcopy(default_params)
+    params.update(request.params)
     input_tokens = tokenizer.convert_ids_to_tokens(
         tokenizer.encode(request.prompt))
     results = translator.translate_batch(
         [input_tokens],
-        beam_size=request.params["beam_size"],
-        sampling_topk=request.params["top_k"],
-        sampling_temperature=request.params["temperature"],
-        repetition_penalty=request.params["repeat_penalty"],
-        no_repeat_ngram_size=request.params["no_repeat_ngram_size"],
-        min_decoding_length=request.params["min_length"],
-        max_decoding_length=request.params["max_length"],
+        beam_size=params["beam_size"],
+        sampling_topk=params["top_k"],
+        sampling_temperature=params["temperature"],
+        repetition_penalty=params["repeat_penalty"],
+        no_repeat_ngram_size=params["no_repeat_ngram_size"],
+        min_decoding_length=params["min_length"],
+        max_decoding_length=params["max_length"],
     )
     output_tokens = results[0].hypotheses[0]
     result = tokenizer.decode(
