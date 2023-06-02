@@ -16,7 +16,8 @@ if stub.is_inside(stub.image):
     import ctranslate2
     print('loading model...')
     generator = ctranslate2.Generator("/mosaicml/mpt-7b-storywriter-ct2")
-    tokenizer = AutoTokenizer.from_pretrained("/EleutherAI/gpt-neox-20b")
+    tokenizer = AutoTokenizer.from_pretrained(
+        "/EleutherAI/gpt-neox-20b")
     print('model loaded.')
 
 
