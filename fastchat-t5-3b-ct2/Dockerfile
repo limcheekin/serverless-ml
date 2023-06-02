@@ -6,7 +6,8 @@ RUN apt-get update && \
 
 RUN pip install -U pip setuptools wheel && \
     pip install --no-cache-dir transformers ctranslate2 sentencepiece accelerate && \
-    pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu
+    pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu && \
+    pip install --no-cache-dir protobuf==3.20.3
 
 
 # Download and prepare model
