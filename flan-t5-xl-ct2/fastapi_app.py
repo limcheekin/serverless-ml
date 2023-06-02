@@ -6,10 +6,13 @@ from pydantic import BaseModel
 from modal import Image, Stub, asgi_app, Mount
 import os
 
+model_name = os.environ["MODEL"]
+index = model_name.rindex("/") + 1
+stub_name = model_name[index:]
 web_app = FastAPI()
-stub = Stub("flan-t5-xl-ct2")
+stub = Stub(stub_name)
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
-    ".", remote_path=".")).env({"MODEL": os.environ["MODEL"]})
+    ".", remote_path=".")).env({"MODEL": model_name})
 stub.image = image
 
 if stub.is_inside(stub.image):
