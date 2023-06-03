@@ -13,7 +13,7 @@ stub_name = model_name[index:]
 web_app = FastAPI()
 stub = Stub(stub_name)
 image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
-    ".", remote_path=".")).env({"MODEL": model_name})
+    ".", remote_path="."), force_build=True).env({"MODEL": model_name})
 stub.image = image
 
 if stub.is_inside(stub.image):
@@ -57,6 +57,7 @@ async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     )
     params = copy.deepcopy(default_params)
     params.update(request.params)
+    print("params", params)
     input_tokens = tokenizer.convert_ids_to_tokens(
         tokenizer.encode(request.prompt))
     results = translator.translate_batch(
