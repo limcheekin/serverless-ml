@@ -20,7 +20,7 @@ The model is quantized version of the [tiiuae/falcon-7b-instruct](https://huggin
 The model being quantized using [CTranslate2](https://opennmt.net/CTranslate2/) with the following command:
 
 ```
-ct2-transformers-converter --model tiiuae/falcon-7b-instruct --output_dir tiiuae/falcon-7b-instruct-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json generation_config.json --quantization int8 --force --low_cpu_mem_usage
+ct2-transformers-converter --model tiiuae/falcon-7b-instruct --output_dir tiiuae/falcon-7b-instruct-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json generation_config.json --quantization int8 --force --low_cpu_mem_usage --trust_remote_code
 ```
 
 If you want to perform the quantization yourself, you need to install the following dependencies:
