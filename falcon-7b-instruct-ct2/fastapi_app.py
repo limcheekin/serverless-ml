@@ -5,7 +5,6 @@ from pydantic import BaseModel
 
 from modal import Image, Stub, asgi_app, Mount
 import os
-import copy
 
 model_name = os.environ["MODEL"]
 index = model_name.rindex("/") + 1
@@ -21,18 +20,9 @@ if stub.is_inside(stub.image):
     import ctranslate2
     import os
     print(f"loading {os.environ['MODEL']} model...")
-    translator = ctranslate2.Translator(os.environ["MODEL"])
+    generator = ctranslate2.Generator(os.environ["MODEL"]))
     tokenizer = AutoTokenizer.from_pretrained(os.environ["MODEL"])
     print('model loaded\n')
-    default_params: dict = {
-        "beam_size": 2,
-        "top_k": 1,              # sampling_topk
-        "temperature": 1.0,      # sampling_temperature
-        "repeat_penalty": 1.0,   # repetition_penalty
-        "no_repeat_ngram_size": 0,
-        "min_length": 1,         # min_decoding_length
-        "max_length": 256,       # max_decoding_length
-    }
 
 
 class Response(BaseModel):
@@ -55,24 +45,12 @@ async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     print(
         f"POST / - received user_agent={user_agent}, request.prompt={request.prompt}, request.params={request.params}"
     )
-    params = copy.deepcopy(default_params)
-    params.update(request.params)
-    print("params", params)
+
     input_tokens = tokenizer.convert_ids_to_tokens(
         tokenizer.encode(request.prompt))
-    results = translator.translate_batch(
-        [input_tokens],
-        beam_size=params["beam_size"],
-        sampling_topk=params["top_k"],
-        sampling_temperature=params["temperature"],
-        repetition_penalty=params["repeat_penalty"],
-        no_repeat_ngram_size=params["no_repeat_ngram_size"],
-        min_decoding_length=params["min_length"],
-        max_decoding_length=params["max_length"],
-    )
-    output_tokens = results[0].hypotheses[0]
-    result = tokenizer.decode(
-        tokenizer.convert_tokens_to_ids(output_tokens))
+    results = generator.generate_batch([input_tokens], **request.params)
+    output_tokens = results[0].sequences_ids[0]
+    result = tokenizer.decode(output_tokens)
     print(f"result: {result}")
     return Response(prompt=result)
 
