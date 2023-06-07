@@ -2,7 +2,7 @@ FROM python:3.10-slim
 
 # Install build dependencies
 RUN apt-get update && \
-    apt-get install -y git-lfs
+    apt-get install -y git-lfs curl
 
 RUN pip install -U pip setuptools wheel && \
     pip install --no-cache-dir transformers ctranslate2 accelerate einops && \
