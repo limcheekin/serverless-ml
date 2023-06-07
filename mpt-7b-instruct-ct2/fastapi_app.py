@@ -39,7 +39,7 @@ async def handle_root(user_agent: Optional[str] = Header(None)):
 async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     data = await request.json()
     print(
-        f"POST / - received user_agent={user_agent}, request.json()={request.json()}"
+        f"POST / - received user_agent={user_agent}, request.json()={data}"
     )
     prompt = data.pop("prompt")
     params = data
