@@ -46,4 +46,4 @@ workflows:
           filters:
             branches:
               only:
-                - falcon-7b-instruct-ct2
+                - starcoder-ct2
