@@ -1,6 +1,6 @@
 from typing import Optional
 
-from fastapi import FastAPI, Header
+from fastapi import FastAPI, Header, Request
 from pydantic import BaseModel
 
 from modal import Image, Stub, asgi_app, Mount
@@ -29,11 +29,6 @@ class Response(BaseModel):
     prompt: str
 
 
-class Request(BaseModel):
-    prompt: str
-    params: Optional[dict] = {}
-
-
 @web_app.get("/")
 async def handle_root(user_agent: Optional[str] = Header(None)):
     print(f"GET /     - received user_agent={user_agent}")
@@ -42,13 +37,15 @@ async def handle_root(user_agent: Optional[str] = Header(None)):
 
 @web_app.post("/")
 async def handle(request: Request, user_agent: Optional[str] = Header(None)):
+    data = await request.json()
     print(
-        f"POST / - received user_agent={user_agent}, request.prompt={request.prompt}, request.params={request.params}"
+        f"POST / - received user_agent={user_agent}, request.json()={data}"
     )
-
+    prompt = data.pop("prompt")
+    params = data
     input_tokens = tokenizer.convert_ids_to_tokens(
-        tokenizer.encode(request.prompt))
-    results = generator.generate_batch([input_tokens], **request.params)
+        tokenizer.encode(prompt))
+    results = generator.generate_batch([input_tokens], **params)
     output_tokens = results[0].sequences_ids[0]
     result = tokenizer.decode(output_tokens)
     print(f"result: {result}")
