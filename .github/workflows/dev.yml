@@ -3,14 +3,14 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - falcon-7b-instruct-ct2
+      - redpajama-chat-7b-ct2
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     env:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-      MODEL: /tiiuae/falcon-7b-instruct-ct2
+      MODEL: /togethercomputer/redpajama-chat-7b-ct2
 
     steps:
       - name: Checkout own repo
@@ -32,4 +32,4 @@ jobs:
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
 
       - name: Test FastAPI app
-        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.FALCON_7B_INSTRUCT_APP_URL }}"
+        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.REDPAJAMA_CHAT_7B_APP_URL }}"
