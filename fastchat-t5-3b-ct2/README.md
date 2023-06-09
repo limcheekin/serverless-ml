@@ -20,7 +20,7 @@ The model is quantized version of the [lmsys/fastchat-t5-3b-v1.0](https://huggin
 The model being quantized using [CTranslate2](https://opennmt.net/CTranslate2/) with the following command:
 
 ```
-ct2-transformers-converter --model lmsys/fastchat-t5-3b --output_dir lmsys/fastchat-t5-3b-ct2 --copy_files added_tokens.json tokenizer_config.json special_tokens_map.json spiece.model --quantization int8 --force --low_cpu_mem_usage
+ct2-transformers-converter --model lmsys/fastchat-t5-3b --output_dir lmsys/fastchat-t5-3b-ct2 --copy_files generation_config.json added_tokens.json tokenizer_config.json special_tokens_map.json spiece.model --quantization int8 --force --low_cpu_mem_usage
 ```
 
 If you want to perform the quantization yourself, you need to install the following dependencies:
