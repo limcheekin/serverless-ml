@@ -23,4 +23,4 @@ COPY README.md togethercomputer/redpajama-chat-7b-ct2/
 
 COPY token.txt ./
 COPY hf_upload_model.py ./
-#RUN python hf_upload_model.py
+RUN python hf_upload_model.py

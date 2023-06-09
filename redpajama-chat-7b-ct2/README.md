@@ -4,14 +4,15 @@ language:
   - en
 tags:
   - ctranslate2
-  - falcon-7b-instruct
+  - RedPajama-INCITE-7B-Chat
+  - redpajama-chat-7b
   - quantization
   - int8
 ---
 
-# Falcon-7B-Instruct Q8
+# RedPajama-INCITE-7B-Chat Q8
 
-The model is quantized version of the [togethercomputer/falcon-7b-instruct](https://huggingface.co/togethercomputer/falcon-7b-instruct) with int8 quantization.
+The model is quantized version of the [togethercomputer/RedPajama-INCITE-7B-Chat](https://huggingface.co/togethercomputer/RedPajama-INCITE-7B-Chat) with int8 quantization.
 
 ## Model Details
 
@@ -20,13 +21,13 @@ The model is quantized version of the [togethercomputer/falcon-7b-instruct](http
 The model being quantized using [CTranslate2](https://opennmt.net/CTranslate2/) with the following command:
 
 ```
-ct2-transformers-converter --model togethercomputer/falcon-7b-instruct --output_dir togethercomputer/redpajama-chat-7b-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json generation_config.json --quantization int8 --force --low_cpu_mem_usage --trust_remote_code
+ct2-transformers-converter --model togethercomputer/redpajama-chat-7b --output_dir togethercomputer/redpajama-chat-7b-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json generation_config.json --quantization int8 --force --low_cpu_mem_usage
 ```
 
 If you want to perform the quantization yourself, you need to install the following dependencies:
 
 ```
-pip install -qU ctranslate2 transformers[torch] accelerate einops
+pip install -qU ctranslate2 transformers[torch] accelerate
 ```
 
 - **Shared by:** Lim Chee Kin
@@ -43,7 +44,7 @@ import transformers
 generator = ctranslate2.Generator("limcheekin/redpajama-chat-7b-ct2")
 tokenizer = transformers.AutoTokenizer.from_pretrained("limcheekin/redpajama-chat-7b-ct2")
 
-prompt = "Long long time ago, "
+prompt = "<human>: Who is Alan Turing?\n<bot>:"
 tokens = tokenizer.convert_ids_to_tokens(tokenizer.encode(prompt))
 
 results = generator.generate_batch([tokens], max_length=256, sampling_topk=10)
