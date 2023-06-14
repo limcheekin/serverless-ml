@@ -19,4 +19,4 @@ RUN pip install -U pip setuptools wheel && \
 
 # Download model
 RUN mkdir model && \
-    curl -L https://huggingface.co/TheBloke/Wizard-Vicuna-13B-Uncensored-GGML/resolve/main/Wizard-Vicuna-13B-Uncensored.ggmlv3.q4_0.bin -o model/ggml-model-q4_0.bin
+    curl -L https://huggingface.co/SlyEcho/open_llama_7b_ggml/resolve/main/open-llama-7b-q4_0.bin -o model/ggml-model-q4_0.bin
