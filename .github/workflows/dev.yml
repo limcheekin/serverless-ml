@@ -3,14 +3,14 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - starcoder-ct2
+      - starchat-ct2
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     env:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-      MODEL: /michaelfeil/ct2fast-starcoder
+      MODEL: /michaelfeil/ct2fast-starchat-beta
 
     steps:
       - name: Checkout own repo
@@ -32,4 +32,4 @@ jobs:
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
 
       - name: Test FastAPI app
-        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.STARCODER_APP_URL }}"
+        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.STARCHAT_APP_URL }}"

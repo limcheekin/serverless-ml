@@ -46,4 +46,4 @@ workflows:
           filters:
             branches:
               only:
-                - starcoder-ct2
+                - starchat-ct2
