@@ -52,7 +52,7 @@ async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     return Response(prompt=result)
 
 
-@stub.function(image=image)
+@stub.function(image=image, cpu=14, memory=20480, timeout=600)
 @asgi_app()
 def fastapi_app():
     return web_app
