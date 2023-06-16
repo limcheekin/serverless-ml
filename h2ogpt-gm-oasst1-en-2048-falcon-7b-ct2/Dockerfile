@@ -5,8 +5,8 @@ RUN apt-get update && \
     apt-get install -y git-lfs
 
 RUN pip install -U pip setuptools wheel && \
-    pip install --no-cache-dir transformers==4.29.2 ctranslate2 accelerate==0.19.0 einops==0.6.1 && \
-    pip install --no-cache-dir torch==2.0.0 --extra-index-url https://download.pytorch.org/whl/cpu
+    pip install --no-cache-dir transformers ctranslate2 accelerate einops && \
+    pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu
 
 
 # Download and prepare model
