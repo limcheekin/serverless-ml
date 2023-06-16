@@ -47,7 +47,7 @@ tokenizer = transformers.AutoTokenizer.from_pretrained(
   trust_remote_code=True,
 )
 
-prompt = "Long long time ago, "
+prompt = "<|prompt|>What is AI?<|endoftext|><|answer|>"
 tokens = tokenizer.convert_ids_to_tokens(tokenizer.encode(prompt))
 
 results = generator.generate_batch([tokens], max_length=256, sampling_topk=10)
