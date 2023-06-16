@@ -25,9 +25,6 @@ jobs:
         run: |
           pip install modal-client pydantic fastapi
 
-      - name: Create token.txt
-        run: cd ${{ github.ref_name }};echo "${{ secrets.HF_TOKEN }}" > token.txt
-
       - name: Deploy FastAPI app
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
 

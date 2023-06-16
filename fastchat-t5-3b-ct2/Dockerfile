@@ -15,13 +15,3 @@ COPY download_model.sh .
 RUN chmod +x download_model.sh && \
     ./download_model.sh && \
     rm download_model.sh
-
-# Convert model
-RUN ct2-transformers-converter --model lmsys/fastchat-t5-3b --output_dir lmsys/fastchat-t5-3b-ct2 --copy_files generation_config.json added_tokens.json tokenizer_config.json special_tokens_map.json spiece.model --quantization int8 --force --low_cpu_mem_usage && \
-    rm -rf lmsys/fastchat-t5-3b
-
-COPY README.md lmsys/fastchat-t5-3b-ct2/
-
-COPY token.txt ./
-COPY hf_upload_model.py ./
-RUN python hf_upload_model.py
