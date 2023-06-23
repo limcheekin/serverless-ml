@@ -14,13 +14,3 @@ COPY download_model.sh .
 RUN chmod +x download_model.sh && \
     ./download_model.sh && \
     rm download_model.sh
-
-# Convert model
-RUN ct2-transformers-converter --model mosaicml/mpt-30b-instruct --output_dir mosaicml/mpt-30b-instruct-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json generation_config.json --quantization int8 --force --low_cpu_mem_usage --trust_remote_code && \
-    rm -rf mosaicml/mpt-30b-instruct
-
-COPY README.md mosaicml/mpt-30b-instruct-ct2/
-
-COPY token.txt ./
-COPY hf_upload_model.py ./
-RUN python hf_upload_model.py
