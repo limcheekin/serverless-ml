@@ -4,14 +4,14 @@ language:
   - en
 tags:
   - ctranslate2
-  - falcon-7b-instruct
+  - mpt-30b-instruct
   - quantization
   - int8
 ---
 
-# Falcon-7B-Instruct Q8
+# MPT-30B-Instruct Q8
 
-The model is quantized version of the [tiiuae/falcon-7b-instruct](https://huggingface.co/tiiuae/falcon-7b-instruct) with int8 quantization.
+The model is quantized version of the [mosaicml/mpt-30b-instruct](https://huggingface.co/mosaicml/mpt-30b-instruct) with int8 quantization.
 
 ## Model Details
 
@@ -20,7 +20,7 @@ The model is quantized version of the [tiiuae/falcon-7b-instruct](https://huggin
 The model being quantized using [CTranslate2](https://opennmt.net/CTranslate2/) with the following command:
 
 ```
-ct2-transformers-converter --model tiiuae/falcon-7b-instruct --output_dir tiiuae/falcon-7b-instruct-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json generation_config.json --quantization int8 --force --low_cpu_mem_usage --trust_remote_code
+ct2-transformers-converter --model mosaicml/mpt-30b-instruct --output_dir mosaicml/mpt-30b-instruct-ct2 --copy_files tokenizer.json tokenizer_config.json special_tokens_map.json generation_config.json --quantization int8 --force --low_cpu_mem_usage --trust_remote_code
 ```
 
 If you want to perform the quantization yourself, you need to install the following dependencies:
@@ -40,10 +40,10 @@ Use the code below to get started with the model.
 import ctranslate2
 import transformers
 
-generator = ctranslate2.Generator("limcheekin/falcon-7b-instruct-ct2")
-tokenizer = transformers.AutoTokenizer.from_pretrained("limcheekin/falcon-7b-instruct-ct2")
-
-prompt = "Long long time ago, "
+generator = ctranslate2.Generator("limcheekin/mpt-30b-instruct-ct2")
+tokenizer = transformers.AutoTokenizer.from_pretrained("limcheekin/mpt-30b-instruct-ct2")
+instruction = "What is AI?"
+prompt = f"Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n###Instruction\n{instruction}\n\n### Response\n"
 tokens = tokenizer.convert_ids_to_tokens(tokenizer.encode(prompt))
 
 results = generator.generate_batch([tokens], max_length=256, sampling_topk=10)
