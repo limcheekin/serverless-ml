@@ -21,7 +21,7 @@ if stub.is_inside(stub.image):
     import os
     print(f"loading {os.environ['MODEL']} model...")
     generator = ctranslate2.Generator(os.environ["MODEL"])
-    tokenizer = AutoTokenizer.from_pretrained(os.environ["MODEL"])
+    tokenizer = AutoTokenizer.from_pretrained("/EleutherAI/gpt-neox-20b")
     print('model loaded\n')
 
 
