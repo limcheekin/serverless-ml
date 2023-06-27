@@ -7,11 +7,13 @@ image = Image.from_dockerfile("Dockerfile", force_build=True).env(
     {"MODEL": "/model/ggml-model-q4_0.bin"})
 
 
-@stub.function(image=image, cpu=14, memory=20480, keep_warm=1, timeout=900)
+@stub.function(image=image, cpu=14, memory=20480, keep_warm=1, timeout=1800)
 @asgi_app()
 def fastapi_app():
-    from llama_cpp.server.app import create_app
-    return create_app()
+    from llama_cpp.server.app import create_app, Settings
+    import os
+    print("os.cpu_count()", os.cpu_count())
+    return create_app(Settings(n_threads=os.cpu_count()))
 
 
 if __name__ == "__main__":
