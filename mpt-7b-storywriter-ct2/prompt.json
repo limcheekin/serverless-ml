@@ -1,7 +1,6 @@
 {
   "prompt": "I have long wanted to write this tale but only now do I find the courage. It is a tale about my dog named Fido. It is the story of how I learned that Fido could talk!\n\nOur story begins when Fido was still a puppy, only 14 months old. It was a calm summer day and we had just enjoyed a walk.",
-  "params": {
-    "temperature": 0.7,
-    "max_tokens": 256
-  }
+  "sampling_temperature": 0.7,
+  "include_prompt_in_result": "False",
+  "max_length": 1024
 }
