@@ -17,7 +17,7 @@ stub.image = image
 
 if stub.is_inside(stub.image):
     from hf_hub_ctranslate2 import GeneratorCT2fromHfHub
-    from transformers import AutoTokenizer
+    from transformers import LlamaTokenizer
     import os
     model_name = os.environ["MODEL"]
     print(f"loading {model_name} model...")
@@ -25,7 +25,7 @@ if stub.is_inside(stub.image):
         model_name_or_path=model_name,
         device="cpu",
         compute_type="int8",
-        tokenizer=AutoTokenizer.from_pretrained(model_name)
+        tokenizer=LlamaTokenizer.from_pretrained(model_name)
     )
     print('model loaded\n')
 
