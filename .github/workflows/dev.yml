@@ -3,14 +3,14 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - starchat-ct2
+      - llama-2-13b-chat-ct2
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     env:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-      MODEL: /michaelfeil/ct2fast-starchat-beta
+      MODEL: /michaelfeil/ct2fast-Llama-2-13b-hf
 
     steps:
       - name: Checkout own repo
@@ -19,7 +19,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Install Python packages
         run: |
