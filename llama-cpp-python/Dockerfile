@@ -12,11 +12,11 @@ RUN apt-get update && \
     libopenblas-dev \
     ninja-build \
     build-essential \
-    wget
+    curl
 
 RUN pip install -U pip setuptools wheel && \
     CMAKE_ARGS="-DLLAMA_OPENBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python[server] pydantic_settings
 
 # Download model
 RUN mkdir model && \
-    wget --continue https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q8_0.bin -o model/ggml-model-q8_0.bin
+    curl -L https://huggingface.co/TheBloke/Llama-2-13B-chat-GGML/resolve/main/llama-2-13b-chat.ggmlv3.q8_0.bin -o model/ggml-model-q8_0.bin
