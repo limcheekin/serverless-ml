@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get install -y git-lfs
 
 RUN pip install -U pip setuptools wheel && \
-    pip install --no-cache-dir transformers ctranslate2 accelerate sentencepiece && \
+    pip install --no-cache-dir transformers ctranslate2 accelerate sentencepiece hf-hub-ctranslate2 && \
     pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu
 
 

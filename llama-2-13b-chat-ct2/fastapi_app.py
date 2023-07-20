@@ -16,8 +16,7 @@ image = Image.from_dockerfile("Dockerfile", context_mount=Mount.from_local_dir(
 stub.image = image
 
 if stub.is_inside(stub.image):
-    from transformers import LlamaTokenizer
-    import ctranslate2
+    from hf_hub_ctranslate2 import GeneratorCT2fromHfHub
     import os
     print(f"loading {os.environ['MODEL']} model...")
     generator = ctranslate2.Generator(os.environ["MODEL"], compute_type="int8")
