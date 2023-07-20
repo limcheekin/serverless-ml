@@ -1,3 +1,3 @@
 {
-  "prompt": "Answer the question based on the context below.\n\nContext: The main benefit of operators is to automate operations. Kubernetes operators are capable to automate the expensive and error likely human operations. Features like autopilot and self-healing are typical scenarios. Another benefit of operators is the reusability of software. Software providers can expose operators in various catalogs to reach new markets and to promote their software. Operators leverage the Kubernetes community, since they are a natural and Kubernetes-native way to extend Kubernetes.\n\nQuestion: What are the main benefits of Kubernetes Operators?\n\nAnswer: "
+  "prompt": "<s>[INST]<<SYS>>Respond with the main characters of the given movie<</SYS>> Guardians of the Galaxy[/INST]"
 }
