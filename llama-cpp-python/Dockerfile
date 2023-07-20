@@ -4,7 +4,7 @@
 # (2) Reduce the size of container images with DockerSlim. https://developers.redhat.com/articles/2022/01/17/reduce-size-container-images-dockerslim.
 
 # Grab a fresh copy of the Python image
-FROM python:3.11-slim
+FROM python:3.10-slim
 
 # Install build and runtime dependencies
 RUN apt-get update && \
@@ -15,7 +15,7 @@ RUN apt-get update && \
     curl
 
 RUN pip install -U pip setuptools wheel && \
-    CMAKE_ARGS="-DLLAMA_OPENBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python[server] pydantic==2.0.3 pydantic-core==2.3.0 pydantic_settings==2.0.2
+    CMAKE_ARGS="-DLLAMA_OPENBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python[server]==0.1.69
 
 # Download model
 RUN mkdir model && \
