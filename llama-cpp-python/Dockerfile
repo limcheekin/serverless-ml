@@ -15,7 +15,7 @@ RUN apt-get update && \
     wget
 
 RUN pip install -U pip setuptools wheel && \
-    CMAKE_ARGS="-DLLAMA_OPENBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python[server]
+    CMAKE_ARGS="-DLLAMA_OPENBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python[server] pydantic_settings
 
 # Download model
 RUN mkdir model && \
