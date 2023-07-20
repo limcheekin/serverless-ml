@@ -32,4 +32,4 @@ jobs:
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
 
       - name: Test FastAPI app
-        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.STARCHAT_APP_URL }}"
+        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.LLAMA2_13B_CHAT_APP_URL }}"
