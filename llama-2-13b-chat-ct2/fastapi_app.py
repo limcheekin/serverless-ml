@@ -21,7 +21,7 @@ if stub.is_inside(stub.image):
     import os
     print(f"loading {os.environ['MODEL']} model...")
     generator = ctranslate2.Generator(os.environ["MODEL"], compute_type="int8")
-    tokenizer = AutoTokenizer.from_pretrained(os.environ["MODEL"])
+    tokenizer = AutoTokenizer.from_pretrained(os.environ["MODEL"], use_fast=False)
     print('model loaded\n')
 
 
