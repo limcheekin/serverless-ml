@@ -19,8 +19,11 @@ if stub.is_inside(stub.image):
     from hf_hub_ctranslate2 import GeneratorCT2fromHfHub
     import os
     print(f"loading {os.environ['MODEL']} model...")
-    generator = ctranslate2.Generator(os.environ["MODEL"], compute_type="int8")
-    tokenizer = LlamaTokenizer.from_pretrained(os.environ["MODEL"])
+    generator = GeneratorCT2fromHfHub(
+        model_name_or_path=os.environ["MODEL"],
+        device="cpu",
+        compute_type="int8",
+    )
     print('model loaded\n')
 
 
@@ -42,13 +45,9 @@ async def handle(request: Request, user_agent: Optional[str] = Header(None)):
     )
     prompt = data.pop("prompt")
     params = data
-    input_tokens = tokenizer.convert_ids_to_tokens(
-        tokenizer.encode(prompt))
-    results = generator.generate_batch([input_tokens], **params)
-    output_tokens = results[0].sequences_ids[0]
-    result = tokenizer.decode(output_tokens)
-    print(f"result: {result}")
-    return Response(prompt=result)
+    results = generator.generate([prompt], **params)
+    print(f"results: {results}")
+    return Response(prompt=results[0])
 
 
 @stub.function(image=image, cpu=14, memory=30720, keep_warm=1, timeout=1800)
