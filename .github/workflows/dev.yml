@@ -10,7 +10,7 @@ jobs:
     env:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-      MODEL: /michaelfeil/ct2fast-Llama-2-13b-hf
+      MODEL: /michaelfeil/ct2fast-Llama-2-13b-chat-hf
 
     steps:
       - name: Checkout own repo
