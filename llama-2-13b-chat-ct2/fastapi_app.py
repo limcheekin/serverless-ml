@@ -17,15 +17,13 @@ stub.image = image
 
 if stub.is_inside(stub.image):
     from hf_hub_ctranslate2 import GeneratorCT2fromHfHub
-    #from transformers import LlamaTokenizer
     import os
     model_name = os.environ["MODEL"]
     print(f"loading {model_name} model...")
     generator = GeneratorCT2fromHfHub(
         model_name_or_path=model_name,
         device="cpu",
-        compute_type="int8",
-    #    tokenizer=LlamaTokenizer.from_pretrained(model_name)
+        compute_type="int8"
     )
     print('model loaded\n')
 

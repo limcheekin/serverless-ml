@@ -1,3 +1,3 @@
 {
-  "prompt": "<s>[INST]<<SYS>>Respond with the main characters of the given movie<</SYS>> Guardians of the Galaxy[/INST]"
+  "prompt": "[INST]<<SYS>>Respond with the main characters of the given movie<</SYS>> Guardians of the Galaxy[/INST]"
 }

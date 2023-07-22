@@ -14,5 +14,3 @@ COPY download_model.sh .
 RUN chmod +x download_model.sh && \
     ./download_model.sh && \
     rm download_model.sh
-
-# COPY tokenizer.model michaelfeil/ct2fast-Llama-2-13b-chat-hf
