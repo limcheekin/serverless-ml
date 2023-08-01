@@ -5,7 +5,7 @@ stub = Stub("llama-cpp-python")
 
 image = Image.from_dockerfile(
                 "Dockerfile", force_build=True
-            ).pip_install("pydantic_settings").env(
+            ).pip_install("pydantic_settings").pip_install("fastapi").env(
                 {"MODEL": "/model/ggml-model-q8_0.bin"}
             )
 
