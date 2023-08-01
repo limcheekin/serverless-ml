@@ -3,8 +3,11 @@ from modal import Image, Stub, asgi_app
 
 stub = Stub("llama-cpp-python")
 
-image = Image.from_dockerfile("Dockerfile", force_build=True).pip_install("pydantic_settings").env(
-            {"MODEL": "/model/ggml-model-q8_0.bin"})
+image = Image.from_dockerfile(
+                "Dockerfile", force_build=True
+            ).pip_install("pydantic_settings").pip_install("fastapi").env(
+                {"MODEL": "/model/ggml-model-q8_0.bin"}
+            )
 
 
 @stub.function(image=image, cpu=14, memory=20480, keep_warm=1, timeout=1800)
