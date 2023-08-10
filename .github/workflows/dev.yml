@@ -3,7 +3,7 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - openorca_openchat
+      - openorca-openchat
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
