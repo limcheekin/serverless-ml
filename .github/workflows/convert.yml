@@ -11,7 +11,7 @@ jobs:
   convert-upload:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout own repo
+      - name: Checkout karpathy/llama2.c repo
         uses: actions/checkout@v4
         with:
           repository: "karpathy/llama2.c"
@@ -23,9 +23,8 @@ jobs:
 
       - name: Install Python packages
         run: |
-          cd ${{ github.ref_name }}
           pip install --no-cache-dir -r requirements.txt
           pip install --no-cache-dir transformers
 
       - name: Download and convert model
-        run: cd ${{ github.ref_name }};python export.py tinyllama.bin --hf ${{ github.event.inputs.model_name }}
+        run: python export.py tinyllama.bin --hf ${{ github.event.inputs.model_name }}
