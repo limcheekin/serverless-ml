@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout own repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          repository: "karpathy/llama2.c"
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -23,6 +25,7 @@ jobs:
         run: |
           cd ${{ github.ref_name }}
           pip install --no-cache-dir -r requirements.txt
+          pip install --no-cache-dir transformers
 
       - name: Download and convert model
         run: cd ${{ github.ref_name }};python export.py tinyllama.bin --hf ${{ github.event.inputs.model_name }}
