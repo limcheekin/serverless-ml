@@ -1,0 +1,28 @@
+# REF: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+name: Convert models and upload to HF
+on:
+  workflow_dispatch:
+    inputs:
+      model_name:
+        required: true
+        description: Model name of hugging face such as PY007/TinyLlama-1.1B-step-50K-105b.
+
+jobs:
+  convert-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout own repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Python packages
+        run: |
+          cd ${{ github.ref_name }}
+          pip install --no-cache-dir -r requirements.txt
+
+      - name: Download and convert model
+        run: cd ${{ github.ref_name }};python export.py tinyllama.bin --hf ${{ github.event.inputs.model_name }}
