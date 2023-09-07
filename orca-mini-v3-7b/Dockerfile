@@ -16,3 +16,7 @@ RUN pip install -U pip setuptools wheel && \
 # Download model
 RUN mkdir model && \
     curl -L https://huggingface.co/TheBloke/orca_mini_v3_7B-GGML/resolve/main/orca_mini_v3_7b.ggmlv3.q4_0.bin -o model/ggml-model.bin
+
+# Fix: Cannot allocate memory. Try increasing RLIMIT_MLOCK ('ulimit -l' as root).
+RUN echo "* soft memlock unlimited" >> /etc/security/limits.conf && \
+    echo "* hard memlock unlimited" >> /etc/security/limits.conf
