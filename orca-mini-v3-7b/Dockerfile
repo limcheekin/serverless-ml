@@ -11,7 +11,7 @@ RUN apt-get update && \
     curl
 
 RUN pip install -U pip setuptools wheel && \
-    CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" FORCE_CMAKE=1 pip install llama-cpp-python[server]
+    CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" FORCE_CMAKE=1 pip install --no-cache-dir llama-cpp-python[server]==0.1.78
 
 # Download model
 RUN mkdir model && \
