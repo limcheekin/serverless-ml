@@ -5,11 +5,7 @@ stub = Stub("orca-mini-v3-7b")
 
 image = Image.from_dockerfile(
     "Dockerfile", force_build=True
-).pip_install("pydantic_settings").pip_install("fastapi==0.100.1").run_commands(
-    # Fix: Cannot allocate memory. Try increasing RLIMIT_MLOCK ('ulimit -l' as root).
-    'echo "* soft memlock unlimited" >> /etc/security/limits.conf && echo "* hard memlock unlimited" >> /etc/security/limits.conf',
-)
-
+).pip_install("pydantic_settings").pip_install("fastapi==0.103.1")
 
 @stub.function(image=image, cpu=14, memory=5120, keep_warm=1, timeout=600)
 @asgi_app()
