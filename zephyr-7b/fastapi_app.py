@@ -1,7 +1,7 @@
 # Modal Lab web app for llama.cpp.
 from modal import Image, Stub, asgi_app
 
-stub = Stub("orca-mini-v3-7b")
+stub = Stub("zephyr-7b")
 
 image = Image.from_dockerfile(
     "Dockerfile", force_build=True
@@ -11,7 +11,7 @@ image = Image.from_dockerfile(
 )
 
 
-@stub.function(image=image, cpu=14, memory=7168, keep_warm=1, timeout=600)
+@stub.function(image=image, cpu=14, memory=8704, keep_warm=1, timeout=600)
 @asgi_app()
 def fastapi_app():
     from llama_cpp.server.app import create_app, Settings

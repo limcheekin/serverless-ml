@@ -3,7 +3,7 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - orca-mini-v3-7b
+      - zephyr-7b
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
@@ -13,12 +13,12 @@ jobs:
 
     steps:
       - name: Checkout own repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Install Python packages
         run: pip install modal-client
@@ -27,4 +27,4 @@ jobs:
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
 
       - name: Test FastAPI app
-        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.ORCA_MINI_V3_7B_APP_URL }}v1/completions"
+        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.ZEPHYR_7B_APP_URL }}v1/completions"

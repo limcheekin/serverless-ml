@@ -1,5 +1,5 @@
 # Grab a fresh copy of the Python image
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 # Install build and runtime dependencies
 RUN apt-get update && \
@@ -15,4 +15,4 @@ RUN pip install -U pip setuptools wheel && \
 
 # Download model
 RUN mkdir model && \
-    curl -L https://huggingface.co/TheBloke/orca_mini_v3_7B-GGUF/resolve/main/orca_mini_v3_7b.Q4_K_M.gguf -o model/gguf-model.bin
+    curl -L https://huggingface.co/TheBloke/zephyr-7B-beta-GGUF/resolve/main/zephyr-7b-beta.Q6_K.gguf -o model/gguf-model.bin
