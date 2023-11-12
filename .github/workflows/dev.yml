@@ -3,7 +3,7 @@ name: Deploy Dev
 on:
   push:
     branches:
-      - zephyr-7b
+      - llava-1.5-13b
 jobs:
   deploy-dev:
     runs-on: ubuntu-latest
@@ -27,4 +27,4 @@ jobs:
         run: cd ${{ github.ref_name }};modal deploy fastapi_app.py
 
       - name: Test FastAPI app
-        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.ZEPHYR_7B_APP_URL }}v1/completions"
+        run: "pwd;cd ${{ github.ref_name }};curl -X POST -H 'Content-Type: application/json' -d @prompt.json ${{ secrets.LLAVA_1_5_13B_APP_URL }}v1/completions"

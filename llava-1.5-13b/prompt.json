@@ -1,0 +1,7 @@
+{
+  "prompt": [
+    "\n\n### Instructions:\nDescribe the AutoGen framework <img https://raw.githubusercontent.com/microsoft/autogen/main/website/static/img/autogen_agentchat.png> with bullet points.\n\n### Response:\n"
+  ],
+  "max_tokens": 512,
+  "stop": ["###"]
+}
