@@ -15,4 +15,4 @@ RUN pip install -U pip setuptools wheel && \
 
 # Download model
 RUN mkdir model && \
-    curl -L https://huggingface.co/TheBloke/zephyr-7B-beta-GGUF/resolve/main/zephyr-7b-beta.Q6_K.gguf -o model/gguf-model.bin
+    curl -L https://huggingface.co/kroonen/phi-2-GGUF/resolve/main/phi-2_Q8_0.gguf -o model/gguf-model.bin

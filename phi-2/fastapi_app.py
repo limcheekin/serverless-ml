@@ -1,17 +1,17 @@
 # Modal Lab web app for llama.cpp.
 from modal import Image, Stub, asgi_app
 
-stub = Stub("zephyr-7b")
+stub = Stub("phi-2")
 
 image = Image.from_dockerfile(
     "Dockerfile", force_build=True
-).pip_install("pydantic_settings").pip_install("fastapi==0.103.1").run_commands(
+).pip_install("pydantic_settings").pip_install("fastapi==0.105.0").run_commands(
     # Fix: Cannot allocate memory. Try increasing RLIMIT_MLOCK ('ulimit -l' as root).
     'echo "* soft memlock unlimited" >> /etc/security/limits.conf && echo "* hard memlock unlimited" >> /etc/security/limits.conf',
 )
 
 
-@stub.function(image=image, cpu=14, memory=8704, keep_warm=1, timeout=600)
+@stub.function(image=image, cpu=4, memory=5632, timeout=600)
 @asgi_app()
 def fastapi_app():
     from llama_cpp.server.app import create_app, Settings
@@ -19,7 +19,7 @@ def fastapi_app():
     print("os.cpu_count()", os.cpu_count())
     app = create_app(
         Settings(
-            n_threads=14,
+            n_threads=4,
             model="/model/gguf-model.bin",
             embedding=False
         )
