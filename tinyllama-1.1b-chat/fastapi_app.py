@@ -1,7 +1,7 @@
 # Modal Lab web app for llama.cpp.
 from modal import Image, Stub, asgi_app
 
-stub = Stub("phi-2")
+stub = Stub("tinyllama-1-1b-chat")
 
 image = Image.from_dockerfile(
     "Dockerfile", force_build=True
@@ -11,7 +11,7 @@ image = Image.from_dockerfile(
 )
 
 
-@stub.function(image=image, cpu=4, memory=5632, timeout=600)
+@stub.function(image=image, cpu=2, memory=2048, timeout=600)
 @asgi_app()
 def fastapi_app():
     from llama_cpp.server.app import create_app, Settings
@@ -19,9 +19,10 @@ def fastapi_app():
     print("os.cpu_count()", os.cpu_count())
     app = create_app(
         Settings(
-            n_threads=4,
+            n_threads=2,
             model="/model/gguf-model.bin",
-            embedding=False
+            embedding=False,
+            chat_format="zephyr"
         )
     )
     return app

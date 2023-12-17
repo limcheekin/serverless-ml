@@ -15,4 +15,4 @@ RUN pip install -U pip setuptools wheel && \
 
 # Download model
 RUN mkdir model && \
-    curl -L https://huggingface.co/radames/phi-2-quantized/resolve/main/model-v2-q80.gguf -o model/gguf-model.bin
+    curl -L https://huggingface.co/TinyLlama/TinyLlama-1.1B-Chat-v0.6/resolve/main/ggml-model-q4_0.gguf -o model/gguf-model.bin
