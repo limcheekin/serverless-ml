@@ -21,7 +21,8 @@ def fastapi_app():
         Settings(
             n_threads=4,
             model="/model/gguf-model.bin",
-            embedding=False
+            embedding=False,
+            chat_format=None
         )
     )
     return app

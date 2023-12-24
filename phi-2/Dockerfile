@@ -15,4 +15,4 @@ RUN pip install -U pip setuptools wheel && \
 
 # Download model
 RUN mkdir model && \
-    curl -L https://huggingface.co/radames/phi-2-quantized/resolve/main/model-v2-q80.gguf -o model/gguf-model.bin
+    curl -L https://huggingface.co/TheBloke/phi-2-GGUF/resolve/main/phi-2.Q6_K.gguf -o model/gguf-model.bin
