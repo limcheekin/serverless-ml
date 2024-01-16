@@ -11,7 +11,7 @@ image = Image.from_dockerfile(
 )
 
 
-@stub.function(image=image, cpu=4, memory=5632, timeout=600)
+@stub.function(image=image, cpu=4, memory=5632, timeout=600, keep_warm=1)
 @asgi_app()
 def fastapi_app():
     from llama_cpp.server.app import create_app, Settings
