@@ -24,4 +24,4 @@ jobs:
       - name: Copy model file to the current directory
         run: |
           ./copy-model-file.sh /usr/share/ollama/.ollama/models/blobs ${{ github.event.inputs.model_name }}
-          ls
+          ls -l
