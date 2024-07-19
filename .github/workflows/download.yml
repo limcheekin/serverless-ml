@@ -5,13 +5,34 @@ on:
       model_name:
         required: true
         description: Specify model to be pulled by ollama such as llama3, phi3, etc.
+      cpu:
+        description: Specify a floating-point number of CPU cores, default to 2.0.
+      memory:
+        description: Specify minimum memory size required, default to 2048 MB.
+      timeout:
+        description: Specify execution timeout, default to 600 seconds.
+      keep_warm:
+        description: Specify to keep number of containers warm and running at all times, default to 1.
+        
   workflow_call:    
 
 jobs:
   download:
     runs-on: ubuntu-latest
+    env:
+      MODAL_USERNAME: ${{ secrets.MODAL_USERNAME }}
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+      MODEL: ${{ github.event.inputs.model_name }}
+      CPU: ${{ github.event.inputs.cpu || '2.0' }}
+      MEMORY: ${{ github.event.inputs.memory || '2048' }}
+      TIMEOUT: ${{ github.event.inputs.timeout || '600' }}
+      KEEP_WARM: ${{ github.event.inputs.keep_warm || '1' }}    
 
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Setup Ollama
         run: curl -fsSL https://ollama.com/install.sh | sh
 
@@ -21,4 +42,23 @@ jobs:
       - name: Copy model file to the current directory
         run: |
           ./copy-model-file.sh /usr/share/ollama/.ollama/models/blobs ${{ github.event.inputs.model_name }}
-          ls
+          ls -l
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Python packages
+        run: pip install modal-client
+
+      - name: Set APP_NAME variable
+        run: |
+          APP_NAME="${{ github.event.inputs.model_name/:/- }}"
+          echo "APP_NAME=${APP_NAME}" >> $GITHUB_ENV
+    
+      - name: Deploy FastAPI app
+        run: modal deploy modal.py
+
+      - name: Test FastAPI app
+        run: curl "https://${{ secrets.MODAL_USERNAME }}--${APP_NAME}-fastapi-app.modal.run/v1/models"
