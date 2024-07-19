@@ -1,4 +1,3 @@
-# Modal Lab web app for open-text-embeddings.
 from modal import Image, App, asgi_app
 import os
 
@@ -24,13 +23,12 @@ def fastapi_app():
     from llama_cpp.server.app import create_app, Settings
     import os
     print("os.cpu_count()", os.cpu_count())
-    app = create_app(
+    return create_app(
         Settings(
             n_threads=os.cpu_count(),
             model=f"./{os.environ['APP_NAME']}.guff"
         )
     )
-    return app
 
 
 if __name__ == "__main__":
