@@ -26,7 +26,7 @@ def fastapi_app():
     return create_app(
         Settings(
             n_threads=os.cpu_count(),
-            model=f"./{os.environ['APP_NAME']}.guff"
+            model=f"/{os.environ['APP_NAME']}.guff"
         )
     )
 
