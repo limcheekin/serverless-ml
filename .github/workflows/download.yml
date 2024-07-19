@@ -1,4 +1,4 @@
-name: Download Ollama model
+name: "Download ollama model: ${{ github.event.inputs.model_name }}"
 on:
   workflow_dispatch:
     inputs:
