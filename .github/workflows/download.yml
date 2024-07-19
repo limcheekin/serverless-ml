@@ -53,8 +53,8 @@ jobs:
 
       - name: Set APP_NAME variable
         run: |
-          APP_NAME="${{ github.event.inputs.model_name/:/- }}"
-          echo "APP_NAME=${APP_NAME}" >> $GITHUB_ENV
+          APP_NAME="${{ github.event.inputs.model_name }}"
+          echo "APP_NAME=${APP_NAME//:/-}" >> $GITHUB_ENV
     
       - name: Deploy FastAPI app
         run: modal deploy modal.py
