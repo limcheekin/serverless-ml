@@ -5,9 +5,6 @@ on:
       model_name:
         required: true
         description: Specify model to be pulled by ollama such as llama3, phi3, etc.
-  push:
-    branches:
-      - ollama-model-download
   workflow_call:    
 
 jobs:
@@ -18,10 +15,10 @@ jobs:
       - name: Setup Ollama
         run: curl -fsSL https://ollama.com/install.sh | sh
 
-      #- name: Pull a model
-      #  run: ollama pull ${{ github.event.inputs.model_name }}
+      - name: Pull a model
+        run: ollama pull ${{ github.event.inputs.model_name }}
 
-      #- name: Copy model file to the current directory
-      #  run: |
-      #    ./copy-model-file.sh /usr/share/ollama/.ollama/models/blobs ${{ github.event.inputs.model_name }}
-      #    ls
+      - name: Copy model file to the current directory
+        run: |
+          ./copy-model-file.sh /usr/share/ollama/.ollama/models/blobs ${{ github.event.inputs.model_name }}
+          ls
