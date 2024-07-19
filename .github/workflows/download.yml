@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout own repo
+        uses: actions/checkout@v4
+        
       - name: Setup Ollama
         run: curl -fsSL https://ollama.com/install.sh | sh
 
