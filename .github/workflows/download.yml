@@ -1,4 +1,4 @@
-name: "Download ollama model: ${{ github.event.inputs.model_name }}"
+name: Download ollama model
 on:
   workflow_dispatch:
     inputs:
@@ -12,8 +12,7 @@ on:
       timeout:
         description: Specify execution timeout, default to 600 seconds.
       keep_warm:
-        description: Specify to keep number of containers warm and running at all times, default to 1.
-        
+        description: Specify to keep number of containers warm and running at all times, default to 1.        
   workflow_call:    
 
 jobs:
